@@ -9,6 +9,6 @@ class ReadingController extends Controller
 {
     public function index(Testament $testament)
     {
-        return $testament->get();
+        return view('reading')->with(['testaments' => $testament->get()]);
     }
 }

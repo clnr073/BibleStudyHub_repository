@@ -21,5 +21,11 @@ class SampleVolumeSeeder extends Seeder
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
             ] );
+            
+        DB::table('volumes')->insert([
+            'title' => 'マタイによる福音書',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+            ] );
     }
 }

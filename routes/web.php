@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReadingController;
+use App\Http\Controllers\TestamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testaments', [ReadingController::class, 'index']);
+Route::get('/', [TestamentController::class, 'showTestaments']);

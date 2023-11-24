@@ -21,13 +21,53 @@ class SampleTestamentSeeder extends Seeder
     public function run()
     {
         DB::table('testaments')->insert([
-            'new' => 1,
+            'new' => 0,
             'chapter' => 1,
             'section' => 1,
             'text' => 'はじめに神は天と地とを創造された。',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
             'volume_id' => 1,
+            ]);
+        
+        DB::table('testaments')->insert([
+            'new' => 0,
+            'chapter' => 1,
+            'section' => 2,
+            'text' => '地は形なく、むなしく、やみが淵のおもてにあり、神の霊が水のおもてをおおっていた。',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+            'volume_id' => 1,
+            ]);
+            
+        DB::table('testaments')->insert([
+            'new' => 0,
+            'chapter' => 2,
+            'section' => 1,
+            'text' => 'こうして天と地と、その万象とが完成した。',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+            'volume_id' => 1,
+            ]);
+            
+        DB::table('testaments')->insert([
+            'new' => 1,
+            'chapter' => 1,
+            'section' => 1,
+            'text' => 'アブラハムの子であるダビデの子、イエス・キリストの系図。',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+            'volume_id' => 2,
+            ]);
+            
+        DB::table('testaments')->insert([
+            'new' => 1,
+            'chapter' => 1,
+            'section' => 2,
+            'text' => 'アブラハムはイサクの父であり、イサクはヤコブの父、ヤコブはユダとその兄弟たちとの父、 ',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+            'volume_id' => 2,
             ]);
     }
 }

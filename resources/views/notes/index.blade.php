@@ -6,6 +6,7 @@
     <body>
         <h1>Note</h1>
         <div class='testaments'>
+            <a href="{{ route('notes.create') }}">ノートを書く</a>
             @foreach($notes as $note)
                 <div class='notes'>
                     <h2>{{ $note->title }}</h2>

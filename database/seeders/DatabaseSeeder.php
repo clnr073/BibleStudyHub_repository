@@ -22,8 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         
         $this->call([
-            SampleVolumeSeeder::class,
-            SampleTestamentSeeder::class,
+            SampleNote_TestamentSeeder::class,
         ]);
     }
 }

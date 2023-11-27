@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestamentController;
+use App\Http\Controllers\NoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,5 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/testament', [TestamentController::class, 'showTestaments'])->name('show');
+Route::get('/testament', [TestamentController::class, 'showTestaments'])->name('testament.show');
+Route::get('/note', [NoteController::class, 'show'])->name('note.show');

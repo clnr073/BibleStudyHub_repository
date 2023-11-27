@@ -7,7 +7,7 @@
         <h1>Note</h1>
         <div class='testaments'>
             @foreach($notes as $note)
-                <div class='note'>
+                <div class='notes'>
                     <h2>{{ $note->title }}</h2>
                     @foreach ($note->testaments as $testament)
                         <h3>{{ $testament->text }}</h3>

@@ -9,6 +9,6 @@ class TestamentController extends Controller
 {
     public function showTestaments(Testament $testament)
     {
-        return view('testament.show')->with(['testaments' => $testament->get()]);
+        return view('testaments.show')->with(['testaments' => $testament->get()]);
     }
 }

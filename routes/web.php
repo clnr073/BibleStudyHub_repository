@@ -32,5 +32,5 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/testament', [TestamentController::class, 'showTestaments'])->name('testament.show');
-Route::get('/note', [NoteController::class, 'show'])->name('note.show');
+Route::get('/testaments', [TestamentController::class, 'showTestaments'])->name('testaments.show');
+Route::get('/notes', [NoteController::class, 'show'])->name('notes.show');

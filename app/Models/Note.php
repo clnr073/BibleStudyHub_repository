@@ -9,6 +9,9 @@ class Note extends Model
 {
     use HasFactory;
     
+    /**
+     * Testamentモデルとのリレーションシップ
+     */
     public function testaments()
     {
         return $this->belongsToMany(Testament::class);

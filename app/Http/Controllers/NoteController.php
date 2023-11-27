@@ -7,8 +7,8 @@ use App\Models\Note;
 
 class NoteController extends Controller
 {
-    public function show(Note $note)
+    public function index(Note $note)
     {
-        return view('notes.show')->with(['notes' => $note->get()]);
+        return view('notes.index')->with(['notes' => $note->get()]);
     }
 }

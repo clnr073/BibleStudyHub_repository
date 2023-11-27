@@ -13,4 +13,9 @@ class Testament extends Model
     {
         return $this->belongsTo(Volume::class);
     }
+    
+    public function notes()
+    {
+        return $this->belongsToMany(Note::class);
+    }
 }

@@ -23,5 +23,13 @@ class SampleTagSeeder extends Seeder
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
             ]);
+            
+        DB::table('tags')->insert([
+            'tag' => 'わからない',
+            'color_id' => 1,
+            'user_id' => 1,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+            ]);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Models\Tag;
+use App\Models\Testament;
 
 class NoteController extends Controller
 {
@@ -18,9 +20,9 @@ class NoteController extends Controller
     /**
      * ノート作成画面
      */
-    public function create(Note $note)
+    public function create(Note $note, Tag $tag, Testament $testament)
     {
-        return view('notes.create');
+        return view('notes.create')->with(['tags' => $tag->get(), 'testaments' => $testament->get()]);
     }
     
     /**

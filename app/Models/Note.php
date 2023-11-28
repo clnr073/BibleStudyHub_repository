@@ -14,7 +14,7 @@ class Note extends Model
         'text',
         'user_id',
         'public',
-        ]
+        ];
     
     /**
      * Testamentモデルとのリレーションシップ

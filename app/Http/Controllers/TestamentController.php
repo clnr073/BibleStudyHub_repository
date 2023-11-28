@@ -11,8 +11,8 @@ class TestamentController extends Controller
     /**
      * 聖書一覧画面
      * 
-     * @param string @testemant 聖書データ
-     * @return Response /resources/views/testaments/show.blade.phpを表示
+     * @param object Testament
+     * @return Response testament.show view
      */
     public function showTestaments(Testament $testament) // 依存性の注入:引数のタイプヒントにTestamentを指定
     { 

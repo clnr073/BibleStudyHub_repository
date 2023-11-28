@@ -41,4 +41,44 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /**
+     * Connectionモデルとのリレーションシップ
+     */
+     public function connections()
+     {
+         return $this->hasMany(Connection::class);
+     }
+    
+    /**
+     * Noteモデルとのリレーションシップ
+     */
+     public function notes()
+     {
+         return $this->hasMany(Note::class);
+     }
+     
+     /**
+     * Commentモデルとのリレーションシップ
+     */
+     public function comments()
+     {
+         return $this->hasMany(Comment::class);
+     }
+     
+     /**
+     * Answerモデルとのリレーションシップ
+     */
+     public function answers()
+     {
+         return $this->hasMany(Answer::class);
+     }
+     
+     /**
+     * Questionモデルとのリレーションシップ
+     */
+     public function questions()
+     {
+         return $this->hasMany(Question::class);
+     }
 }

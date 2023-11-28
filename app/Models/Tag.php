@@ -16,4 +16,20 @@ class Tag extends Model
      {
          return $this->belongsToMany(Testament::class);
      }
+     
+     /**
+      * Questionモデルとのリレーションシップ
+      */
+      public function questions()
+      {
+          return $this->belongsToMany(Question::class);
+      }
+      
+      /**
+       * Colorモデルとのリレーションシップ
+       */
+       public function color()
+       {
+          return $this->belongsTo(Color::class);
+       }
 }

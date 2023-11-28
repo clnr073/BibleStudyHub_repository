@@ -12,8 +12,14 @@ class Connection extends Model
     /**
      * Userモデルとのリレーションシップ
      */
-     public function user()
+     public function followedBy()
      {
-         return $this->belongsTo(User::class);
+         return $this->belongsTo(User::class, 'follow_id');
      }
+     
+     public function follows()
+     {
+         return $this->belongsTo(User::class, 'followed_id');
+     }
+
 }

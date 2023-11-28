@@ -31,4 +31,20 @@ class Note extends Model
      {
          return $this->belongsToMany(Tag::class);
      }
+     
+     /**
+      * Commentモデルとのリレーションシップ
+      */
+      public function comments()
+     {
+         return $this->hasMany(Comment::class);
+     }
+     
+     /**
+      * Userモデルとのリレーションシップ
+      */
+      public function user()
+      {
+          return $this->belongsTo(User::class);
+      }
 }

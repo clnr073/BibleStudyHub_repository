@@ -24,4 +24,20 @@ class Testament extends Model
     {
         return $this->belongsToMany(Note::class);
     }
+    
+    /**
+     * Questionモデルとのリレーションシップ
+     */
+     public function questions()
+     {
+         return $this->belongsToMany(Question::class);
+     }
+     
+     /**
+      * Answerモデルとのリレーションシップ
+      */
+      public function answers()
+     {
+         return $this->belongsToMany(Answer::class);
+     }
 }

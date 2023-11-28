@@ -12,8 +12,24 @@ class Answer extends Model
     /**
      * Questionモデルとのリレーションシップ
      */
-     public function questions()
+     public function question()
      {
-         $this->belongsTo
+         return $this->belongsTo(Question::class);
      }
+     
+     /**
+      * Testamentモデルとのリレーションシップ
+      */
+      public function testaments()
+      {
+          return $this->belongsToMany(Testament::class);
+      }
+      
+      /**
+      * Userモデルとのリレーションシップ
+      */
+      public function user()
+      {
+          return $this->belongsTo(User::class);
+      }
 }

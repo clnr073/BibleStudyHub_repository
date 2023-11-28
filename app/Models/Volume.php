@@ -9,6 +9,9 @@ class Volume extends Model
 {
     use HasFactory;
     
+    /**
+     * Testamentモデルとのリレーションシップ
+     */
     public function testament()
     {
         return $this->hasOne(Testament::class);

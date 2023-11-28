@@ -9,11 +9,17 @@ class Testament extends Model
 {
     use HasFactory;
     
+    /**
+     * Volumeモデルとのリレーションシップ
+     */
     public function volume()
     {
         return $this->belongsTo(Volume::class);
     }
     
+    /**
+     * Noteモデルとのリレーションシップ
+     */
     public function notes()
     {
         return $this->belongsToMany(Note::class);

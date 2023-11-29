@@ -10,11 +10,11 @@
             <div class="testament">
                 <label>
                     <input type="radio" value="1" name="note[public]" {{ $value == true ? 'checked' : '' }}>
-                    公開
+                    公開ノート
                 </label>
                 <label>
                     <input type="radio" value="0" name="note[public]" {{ $value == false ? 'checked' : '' }}>
-                    非公開
+                    非公開ノート
                 </label>
                 <br>
                 <h2>聖句</h2>
@@ -23,6 +23,7 @@
                         <input type="checkbox" value={{ $testament->id }} name="testaments_array[]">
                             {{ $testament->text }}
                     </lavel>
+                    <br>
                 @endforeach
             </div>
             <div class="title">

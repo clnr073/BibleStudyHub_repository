@@ -22,7 +22,9 @@ class NoteController extends Controller
      */
     public function create(Note $note, Tag $tag, Testament $testament)
     {
-        return view('notes.create')->with(['tags'=>$tag->get(), 'testaments'=>$testament->get()]);
+        $value = 'true';
+        
+        return view('notes.create')->with(['value' => $value, 'tags'=>$tag->get(), 'testaments'=>$testament->get()]);
     }
     
     /**

@@ -8,22 +8,30 @@
         <form action="/notes" method="POST">
             @csrf
             <div class="testament">
+                <label>
+                    <input type="radio" value="1" name="note[public]" {{ $value == true ? 'checked' : '' }}>
+                    公開
+                </label>
+                <label>
+                    <input type="radio" value="0" name="note[public]" {{ $value == false ? 'checked' : '' }}>
+                    非公開
+                </label>
+                <br>
                 <h2>聖句</h2>
                 @foreach ($testaments as $testament)
                     <lavel>
                         <input type="checkbox" value={{ $testament->id }} name="testaments_array[]">
                             {{ $testament->text }}
-                        </input>
                     </lavel>
                 @endforeach
             </div>
             <div class="title">
                 <h2>タイトル</h2>
-                <input type="text" name="note[title]">
+                <input type="text" name="note[title]" placeholder="タイトル">
             </div>
             <div class="text">
                 <h2>本文</h2>
-                <textarea name="note[text]"></textarea>
+                <textarea name="note[text]" placeholder="ここにノートを入力"></textarea>
             </div>
             
             <div class="tag">
@@ -32,7 +40,6 @@
                     <lavel>
                         <input type="checkbox" value={{ $tag->id }} name="tags_array[]">
                             {{ $tag->tag }}
-                        </input>
                     </lavel>
                 @endforeach
             </div>

@@ -19,19 +19,21 @@ class NoteController extends Controller
     
     /**
      * ノート作成画面
+     * $valueは、ラジオボタンのchecked属性を動的に制御するために用意
      */
     public function create(Note $note, Tag $tag, Testament $testament)
     {
-        return view('notes.create')->with(['tags'=>$tag->get(), 'testaments'=>$testament->get()]);
+        $value = 'true';
+        
+        return view('notes.create')->with(['value' => $value, 'tags'=>$tag->get(), 'testaments'=>$testament->get()]);
     }
     
     /**
      * リクエストされたデータをnotesテーブルにinsertする
      */
-     
      public function store(Request $request, Note $note)
      {
-         $input = $request['post'];
+         $input = $request['note'];
          $input += ['user_id' => $request->user()->id];
          $post = fill($input)->save();
          return redirect(route('notes.index'));

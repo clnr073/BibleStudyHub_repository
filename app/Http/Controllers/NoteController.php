@@ -21,7 +21,7 @@ class NoteController extends Controller
      * ノート作成画面
      * $valueは、ラジオボタンのchecked属性を動的に制御するために用意
      */
-    public function create(Note $note, Tag $tag, Testament $testament)
+    public function create(Tag $tag, Testament $testament)
     {
         $value = 'true';
         
@@ -31,11 +31,17 @@ class NoteController extends Controller
     /**
      * リクエストされたデータをnotesテーブルにinsertする
      */
-     public function store(Request $request, Note $note)
+     public function store(Request $request, Note $note )
      {
-         $input = $request['note'];
-         $input += ['user_id' => $request->user()->id];
-         $post = fill($input)->save();
+         $input_note = $request['note'];
+         $input_testaments = $request->testaments_array;
+         $input_tags = $request->tags_array;
+         
+         $input_note += ['user_id' => $request->user()->id]; // user():requestを送信したユーザーの情報を取得するRequestメソッド
+         $note->fill($input_note)->save();
+         // attachメソッドを使って中間テーブルにデータを保存
+         $note->testaments()->attach($input_testaments);
+         $note->tags()->attach($input_tags);
          return redirect(route('notes.index'));
      }
 }

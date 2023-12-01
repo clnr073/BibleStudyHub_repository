@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\Testament;
+use App\Http\Requests\NoteRequest;
 
 class NoteController extends Controller
 {
@@ -16,6 +17,18 @@ class NoteController extends Controller
     {
         return view('notes.index')->with(['notes' => $note->get()]);
     }
+    
+    /**
+     * ノート詳細画面
+     * 特定idのノートを表示する
+     * 
+     * $param Object Note
+     * return Response note view
+     */
+     public function show(Note $note)
+     {
+         return view('notes.show')->with(['note' => $note]);
+     }
     
     /**
      * ノート作成画面
@@ -31,7 +44,7 @@ class NoteController extends Controller
     /**
      * リクエストされたデータをnotesテーブルにinsertする
      */
-     public function store(Request $request, Note $note )
+     public function store(Note $note, NoteRequest $request)
      {
          $input_note = $request['note'];
          $input_testaments = $request->testaments_array;

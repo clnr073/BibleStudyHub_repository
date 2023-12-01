@@ -13,7 +13,7 @@ class NoteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true; //元の値はfalse
     }
 
     /**
@@ -24,7 +24,9 @@ class NoteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'note.public' => 'required',
+            'note.title' => 'required|string|max:200',
+            'note.text' => 'required',
         ];
     }
 }

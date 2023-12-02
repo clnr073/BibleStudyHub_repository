@@ -57,3 +57,7 @@ Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
     ->name('notes.edit');
 Route::put('/notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update');
+    
+// ノート削除処理
+Route::delete('/notes/{note}', [NoteController::class, 'delete'])
+    ->name('notes.delete');

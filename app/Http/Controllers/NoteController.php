@@ -103,4 +103,13 @@ class NoteController extends Controller
           
           return redirect('/notes/' . $note->id);
       }
+      
+      /**
+       * ノート削除処理
+       */
+       public function delete(Note $note)
+       {
+           $note->delete();
+           return redirect(route('notes.index'));
+       }
 }

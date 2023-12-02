@@ -19,6 +19,7 @@
                         <p>{{ $testament->volume->title }} {{ $testament->chapter }}:{{ $testament->section }}</p>
                     @endforeach
                 </div>
+                <p>{{ $note->text }}</p>
                 <div class="tags">
                     @foreach ($note->tags as $tag)
                         <p>{{ $tag->tag }}</p>
@@ -31,7 +32,8 @@
                     <a href="{{ route('notes.index') }}">戻る</a>
                 </div>
             </div>
+            <!-- デバックステップ -->
+            <pre><code>{{ var_dump($note) }}</code></pre>
         </div>
-        <pre><code>{{ var_dump($note) }}</code></pre>
     </body>
 </x-app-layout>

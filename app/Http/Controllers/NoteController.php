@@ -32,16 +32,21 @@ class NoteController extends Controller
     
     /**
      * ノート作成画面
-     * $valueは、ラジオボタンのchecked属性を動的に制御するために用意
+     * $public_valueは、ラジオボタンのchecked属性を動的に制御するために用意
      */
     public function create(Tag $tag, Testament $testament)
     {
-        $value = 'true';
+        $public_value = 'true';
         
-        return view('notes.create')->with(['value' => $value, 'tags'=>$tag->get(), 'testaments'=>$testament->get()]);
+        return view('notes.create')->with([
+            'public_value' => $public_value,
+            'tags' => $tag->get(),
+            'testaments' => $testament->get(),
+            ]);
     }
     
     /**
+     * ノート保存処理
      * リクエストされたデータをnotesテーブルにinsertする
      */
      public function store(Note $note, NoteRequest $request)
@@ -57,4 +62,32 @@ class NoteController extends Controller
          $note->tags()->attach($input_tags);
          return redirect(route('notes.index'));
      }
+     
+     /**
+      * ノート編集画面
+      */
+      public function edit(Note $note, Tag $tag, Testament $testament)
+      {
+          $public_value = $note->public;
+          // pluckメソッドでidカラムの値を抽出
+          $testament_id = $note->testaments->pluck('id');
+          $tag_id = $note->tags->pluck('id');
+          
+          return view('notes.edit')->with([
+              'public_value' => $public_value,
+              'testament_id' => $testament_id,
+              'tag_id' => $tag_id,
+              'note' => $note,
+              'tags' => $tag->get(),
+              'testaments' => $testament->get(),
+              ]);
+      }
+      
+     /**
+      * ノート更新処理
+      */
+      public function update()
+      {
+          //
+      }
 }

@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        　Note
+        　Notes
     </x-slot>
     
     <body>
-        <h1>Note</h1>
+        <h1>Notes</h1>
         <div class="notes">
             <a href="{{ route('notes.create') }}">ノートを書く</a>
             @foreach($notes as $note)

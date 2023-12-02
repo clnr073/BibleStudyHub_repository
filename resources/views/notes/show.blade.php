@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        　Note
+        　Note Show
     </x-slot>
     
     <body>
-        <h1>Note</h1>
+        <h1>Note Show</h1>
         <div class="notes">
             @if ($note->public === 1)
                 <h1>公開</h1>

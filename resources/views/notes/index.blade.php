@@ -21,8 +21,24 @@
                         <p>{{ $testament->volume->title }} {{ $testament->chapter }}:{{ $testament->section }}</p>
                     @endforeach
                 </div>
+                <p>{{ $note->text }}</p>
+                <form action="/notes/{{ $note->id }}" id="form_{{ $note->id }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" onclick="deleteNote({{ $note->id }})">このノートを削除する</button>
+                </form>
             @endforeach
+            <!-- デバックステップ -->
+            <pre><code>{{ var_dump($notes) }}</code></pre>
         </div>
-        <pre><code>{{ var_dump($notes) }}</code></pre>
+        <script>
+            function deleteNote(id) {
+                'use strict'
+                
+                if (confirm('削除すると復元できません。本当に削除しますか？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+        </script>
     </body>
 </x-app-layout>

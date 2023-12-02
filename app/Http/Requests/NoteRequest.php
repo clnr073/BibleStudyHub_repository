@@ -24,8 +24,7 @@ class NoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'note.public' => 'required',
-            'note.title' => 'required|string|max:200',
+            'note.title' => 'required',
             'note.text' => 'required',
         ];
     }

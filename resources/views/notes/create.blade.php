@@ -28,11 +28,13 @@
             </div>
             <div class="title">
                 <h2>タイトル</h2>
-                <input type="text" name="note[title]" placeholder="タイトル">
+                <input type="text" name="note[title]" placeholder="タイトル" value="{{ old('note.title')}}">
+                <p class="title__error" style="color:red">{{ $errors->first('note.title') }}</p>
             </div>
             <div class="text">
                 <h2>本文</h2>
-                <textarea name="note[text]" placeholder="ここにノートを入力"></textarea>
+                <textarea name="note[text]" placeholder="ここにノートを入力">{{ old('note.text')}}</textarea>
+                <p class="text__error" style="color:red">{{ $errors->first('note.text') }}</p>
             </div>
             
             <div class="tag">

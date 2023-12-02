@@ -44,6 +44,16 @@ Route::get('/notes', [NoteController::class, 'index'])
 Route::get('/notes/create', [NoteController::class, 'create'])
     ->name('notes.create');
 
+// ノート詳細画面
+Route::get('/notes/{note}', [NoteController::class, 'show'])
+    ->name('notes.show');
+
 // ノート登録処理
 Route::post('/notes', [NoteController::class, 'store'])
     ->name('notes.store');
+    
+// ノート編集処理
+Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
+    ->name('notes.edit');
+Route::put('/notes/{note}', [NoteController::class, 'update'])
+    ->name('notes.update');

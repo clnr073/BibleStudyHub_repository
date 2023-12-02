@@ -1,12 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        　Note Create
+        　Note Edit
     </x-slot>
     
     <body>
-        <h1>Note Create</h1>
-        <form action="/notes" method="POST">
+        <h1>Note Edit</h1>
+        <form action="/notes/{{ $note->id }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="testament">
                 <label>
                     <input type="radio" value="1" name="note[public]" {{ $public_value == true ? 'checked' : '' }}>
@@ -20,7 +21,7 @@
                 <h2>聖句</h2>
                 @foreach ($testaments as $testament)
                     <lavel>
-                        <input type="checkbox" value={{ $testament->id }} name="testaments_array[]" {{ in_array($testament->id, old('testaments_array', [])) ? 'checked' : '' }}>
+                        <input type="checkbox" value={{ $testament->id }} name="testaments_array[]" {{ $testament_id->contains($testament->id) ? 'checked' : '' }}>
                             {{ $testament->text }}
                     </lavel>
                     <br>
@@ -28,12 +29,12 @@
             </div>
             <div class="title">
                 <h2>タイトル</h2>
-                <input type="text" name="note[title]" placeholder="タイトル" value="{{ old('note.title')}}">
+                <input type="text" name="note[title]" placeholder="タイトル" value="{{ $note->title }}">
                 <p class="title__error" style="color:red">{{ $errors->first('note.title') }}</p>
             </div>
             <div class="text">
                 <h2>本文</h2>
-                <textarea name="note[text]" placeholder="ここにノートを入力">{{ old('note.text')}}</textarea>
+                <textarea name="note[text]" placeholder="ここにノートを入力">{{ $note->text }}</textarea>
                 <p class="text__error" style="color:red">{{ $errors->first('note.text') }}</p>
             </div>
             
@@ -41,7 +42,7 @@
                 <h2>タグ</h2>
                 @foreach ($tags as $tag)
                     <lavel>
-                        <input type="checkbox" value={{ $tag->id }} name="tags_array[]" {{ in_array($tag->id, old('tags_array', [])) ? 'checked' : '' }}>
+                        <input type="checkbox" value={{ $tag->id }} name="tags_array[]" {{ $tag_id->contains($tag->id) ? 'checked' : '' }}>
                             {{ $tag->tag }}
                     </lavel>
                 @endforeach
@@ -51,7 +52,8 @@
         <div class="footer">
             <a href="{{ route('notes.index') }}">戻る</a>
         </div>
-        <!-- デバックステップ: oldヘルパーの動作確認 -->
-        <pre><code>{{ var_dump(session()->get('_old_input')) }}</code></pre>
+        <!-- デバックステップ -->
+        <p>{{ $note->testaments->pluck('id') }}</p>
+        <pre><code>{{ var_dump($note) }}</code></pre>
     </body>
 </x-app-layout>

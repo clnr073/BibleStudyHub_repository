@@ -23,5 +23,6 @@
                 </div>
             @endforeach
         </div>
+        <pre><code>{{ var_dump($notes) }}</code></pre>
     </body>
 </x-app-layout>

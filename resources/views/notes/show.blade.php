@@ -24,10 +24,14 @@
                         <p>{{ $tag->tag }}</p>
                     @endforeach
                 </div>
+                <div class="edit">
+                    <a href="/notes/{{ $note->id }}/edit">編集する</a>
+                </div>
                 <div class="footer">
                     <a href="{{ route('notes.index') }}">戻る</a>
                 </div>
             </div>
         </div>
+        <pre><code>{{ var_dump($note) }}</code></pre>
     </body>
 </x-app-layout>

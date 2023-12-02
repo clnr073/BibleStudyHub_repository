@@ -20,7 +20,7 @@
                 <h2>聖句</h2>
                 @foreach ($testaments as $testament)
                     <lavel>
-                        <input type="checkbox" value={{ $testament->id }} name="testaments_array[]">
+                        <input type="checkbox" value={{ $testament->id }} name="testaments_array[]" {{ in_array($testament->id, old('testaments_array', [])) ? 'checked' : '' }}>
                             {{ $testament->text }}
                     </lavel>
                     <br>
@@ -41,7 +41,7 @@
                 <h2>タグ</h2>
                 @foreach ($tags as $tag)
                     <lavel>
-                        <input type="checkbox" value={{ $tag->id }} name="tags_array[]">
+                        <input type="checkbox" value={{ $tag->id }} name="tags_array[]" {{ in_array($tag->id, old('tags_array', [])) ? 'checked' : '' }}>
                             {{ $tag->tag }}
                     </lavel>
                 @endforeach
@@ -51,5 +51,7 @@
         <div class="footer">
             <a href="{{ route('notes.index') }}">戻る</a>
         </div>
+        <!-- デバックステップ: oldヘルパーの動作確認 -->
+        <pre><code>{{ var_dump(session()->get('_old_input')) }}</code></pre>
     </body>
 </x-app-layout>

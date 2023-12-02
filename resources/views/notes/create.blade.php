@@ -9,11 +9,11 @@
             @csrf
             <div class="testament">
                 <label>
-                    <input type="radio" value="1" name="note[public]" {{ $value == true ? 'checked' : '' }}>
+                    <input type="radio" value="1" name="note[public]" {{ $public_value == true ? 'checked' : '' }}>
                     公開ノート
                 </label>
                 <label>
-                    <input type="radio" value="0" name="note[public]" {{ $value == false ? 'checked' : '' }}>
+                    <input type="radio" value="0" name="note[public]" {{ $public_value == false ? 'checked' : '' }}>
                     非公開ノート
                 </label>
                 <br>

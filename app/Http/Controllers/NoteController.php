@@ -57,9 +57,11 @@ class NoteController extends Controller
          
          $input_note += ['user_id' => $request->user()->id]; // user():requestを送信したユーザーの情報を取得するRequestメソッド
          $note->fill($input_note)->save();
+         
          // attachメソッドを使って中間テーブルにデータを保存
          $note->testaments()->attach($input_testaments);
          $note->tags()->attach($input_tags);
+         
          return redirect(route('notes.index'));
      }
      
@@ -86,8 +88,19 @@ class NoteController extends Controller
      /**
       * ノート更新処理
       */
-      public function update()
+      public function update(Note $note, NoteRequest $request)
       {
-          //
+          $input_note = $request['note'];
+          $input_testaments = $request->testaments_array;
+          $input_tags = $request->tags_array;
+         
+          $input_note += ['user_id' => $request->user()->id]; // user():requestを送信したユーザーの情報を取得するRequestメソッド
+          $note->fill($input_note)->save();
+          
+          // 関連データを更新するために sync() メソッドを使用する
+          $note->testaments()->sync($input_testaments);
+          $note->tags()->sync($input_tags);
+          
+          return redirect('/notes/' . $note->id);
       }
 }

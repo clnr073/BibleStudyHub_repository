@@ -5,7 +5,7 @@
     
     <body>
         <h1>Note Show</h1>
-        <div class="notes">
+        <div class="note">
             @if ($note->public === 1)
                 <h1>公開</h1>
             @else

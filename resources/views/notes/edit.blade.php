@@ -5,8 +5,9 @@
     
     <body>
         <h1>Note Edit</h1>
-        <form action="/notes" method="POST">
+        <form action="/notes/{{ $note->id }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="testament">
                 <label>
                     <input type="radio" value="1" name="note[public]" {{ $public_value == true ? 'checked' : '' }}>
@@ -52,7 +53,7 @@
             <a href="{{ route('notes.index') }}">戻る</a>
         </div>
         <!-- デバックステップ -->
-        <p>{{ $note->testaments }}</p>
+        <p>{{ $note->testaments->pluck('id') }}</p>
         <pre><code>{{ var_dump($note) }}</code></pre>
     </body>
 </x-app-layout>

@@ -33,8 +33,8 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // 聖書一覧画面
-Route::get('/testaments', [TestamentController::class, 'showTestaments'])
-    ->name('testaments.show');
+Route::get('/testaments/{volume_id?}/{chapter?}', [TestamentController::class, 'displayChapterWithContents'])
+    ->name('testaments.index');
 
 // ノート一覧画面
 Route::get('/notes', [NoteController::class, 'index'])

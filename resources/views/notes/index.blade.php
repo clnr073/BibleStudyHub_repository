@@ -21,7 +21,14 @@
                         <p>{{ $testament->volume->title }} {{ $testament->chapter }}:{{ $testament->section }}</p>
                     @endforeach
                 </div>
-                <p>{{ $note->text }}</p>
+                <div class="note_text">
+                    <p>{{ $note->text }}</p>
+                </div>
+                <div class="note_tag">
+                    @foreach ($note->tags as $tag)
+                        <p>{{ $tag->tag }}</p>
+                    @endforeach
+                </div>
                 <form action="/notes/{{ $note->id }}" id="form_{{ $note->id }}" method="post">
                     @csrf
                     @method('DELETE')
@@ -29,7 +36,7 @@
                 </form>
             @endforeach
             <!-- デバックステップ -->
-            <pre><code>{{ var_dump($notes) }}</code></pre>
+            {{ dump($notes) }}
         </div>
         <script>
             function deleteNote(id) {

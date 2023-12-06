@@ -13,27 +13,26 @@
             @endif
             <p>{{ $note->created_at }}</p>
             <h2>{{ $note->title }}</h2>
-                <div class="testaments">
-                    @foreach ($note->testaments as $testament)
-                        <h3>{{ $testament->text }}</h3>
-                        <p>{{ $testament->volume->title }} {{ $testament->chapter }}:{{ $testament->section }}</p>
-                    @endforeach
-                </div>
-                <p>{{ $note->text }}</p>
-                <div class="tags">
-                    @foreach ($note->tags as $tag)
-                        <p>{{ $tag->tag }}</p>
-                    @endforeach
-                </div>
-                <div class="edit">
-                    <a href="/notes/{{ $note->id }}/edit">編集する</a>
-                </div>
-                <div class="footer">
-                    <a href="{{ route('notes.index') }}">戻る</a>
-                </div>
+            <div class="testaments">
+                @foreach ($note->testaments as $testament)
+                    <h3>{{ $testament->text }}</h3>
+                    <p>{{ $testament->volume->title }} {{ $testament->chapter }}:{{ $testament->section }}</p>
+                @endforeach
             </div>
-            <!-- デバックステップ -->
-            <pre><code>{{ var_dump($note) }}</code></pre>
+            <p>{{ $note->text }}</p>
+            <div class="tags">
+                @foreach ($note->tags as $tag)
+                    <p>{{ $tag->tag }}</p>
+                @endforeach
+            </div>
+            <div class="edit">
+                <a href="/notes/{{ $note->id }}/edit">編集する</a>
+            </div>
+            <div class="footer">
+                <a href="{{ route('notes.index') }}">戻る</a>
+            </div>
         </div>
+        <!-- デバックステップ -->
+        {{ dump($note) }}
     </body>
 </x-app-layout>

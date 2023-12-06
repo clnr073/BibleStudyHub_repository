@@ -54,6 +54,6 @@
         </div>
         <!-- デバックステップ -->
         <p>{{ $note->testaments->pluck('id') }}</p>
-        <pre><code>{{ var_dump($note) }}</code></pre>
+        {{ dump($note) }}</code></pre>
     </body>
 </x-app-layout>

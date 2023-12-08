@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\Testament;
+use App\Models\Comment;
 use App\Http\Requests\NoteRequest;
 
 class NoteController extends Controller
@@ -25,9 +26,11 @@ class NoteController extends Controller
      * $param Object Note
      * return Response note view
      */
-     public function show(Note $note)
+     public function show(Note $note, Testament $testament)
      {
-         return view('notes.show')->with(['note' => $note]);
+         $comment_testament = $testament->get();
+         
+         return view('notes.show')->with(['note' => $note, 'comment_testaments' => $comment_testament]);
      }
     
     /**
@@ -51,6 +54,7 @@ class NoteController extends Controller
      */
      public function store(Note $note, NoteRequest $request)
      {
+         dd($request);
          $input_note = $request['note'];
          $input_testaments = $request->testaments_array;
          $input_tags = $request->tags_array;

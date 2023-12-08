@@ -9,6 +9,12 @@ class Comment extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'text',
+        'note_id',
+        'user_id',
+        ];
+    
     /**
      * Noteモデルとのリレーションシップ
      */
@@ -22,6 +28,14 @@ class Comment extends Model
       */
       public function user()
       {
-          return $this->belongsTo(User::class);
+         return $this->belongsTo(User::class);
+      }
+      
+      /**
+       * Testamentモデルとのリレーションシップ
+       */
+      public function testaments()
+      {
+         return $this->belongsToMany(Testament::class); 
       }
 }

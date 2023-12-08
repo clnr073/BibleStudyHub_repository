@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestamentController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,7 @@ Route::get('/notes/create', [NoteController::class, 'create'])
 // ノート詳細画面
 Route::get('/notes/{note}', [NoteController::class, 'show'])
     ->name('notes.show');
+Route::post('/notes/{note}', [CommentController::class, 'store']);
 
 // ノート登録処理
 Route::post('/notes', [NoteController::class, 'store'])

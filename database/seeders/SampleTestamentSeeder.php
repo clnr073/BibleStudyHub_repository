@@ -139,5 +139,15 @@ class SampleTestamentSeeder extends Seeder
             'updated_at' => new DateTime(),
             'volume_id' => 2,
             ]);
+            
+        DB::table('testaments')->insert([
+            'new' => 1,
+            'chapter' => 1,
+            'section' => 1,
+            'text' => 'わたしたちの間に成就された出来事を、最初から親しく見た人々であって、',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+            'volume_id' => 3,
+            ]);
     }
 }

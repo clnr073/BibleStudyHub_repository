@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\Testament;
+use App\Models\Comment;
 use App\Http\Requests\NoteRequest;
 
 class NoteController extends Controller
@@ -109,7 +110,7 @@ class NoteController extends Controller
        */
        public function delete(Note $note)
        {
-           $note->delete();
+           $note->delete(); //Modelクラスの関数delete
            return redirect(route('notes.index'));
        }
 }

@@ -5,11 +5,19 @@
     
     <body>
         <div class="testaments">
-            <h2>{{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}章</h2>
-            @foreach ($testaments as $testament)
-                <input type="checkbox" value={{ $testament->id }} name="testaments_array[]">
-                <small>{{ $testament->section }}</small> {{ $testament->text }}
-            @endforeach
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900">
+                            <h2>{{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}章</h2>
+                            @foreach ($testaments as $testament)
+                                <input type="checkbox" value={{ $testament->id }} name="testaments_array[]">
+                                <small>{{ $testament->section }}</small> {{ $testament->text }}
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!--現時点のchapterの値に応じて、前後のページに移動するメカニズム -->
         <div class="pagination">

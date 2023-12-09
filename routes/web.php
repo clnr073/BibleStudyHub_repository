@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestamentController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,18 @@ Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
 Route::put('/notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update');
     
+// コメント一覧表示
+Route::get('/notes/{note}/comments', [CommentController::class, 'index']);
+
+//コメント保存処理
+Route::post('/notes/{note}/comments', [CommentController::class, 'store']);
+
+Route::get('/notes/{note}/comments/{comment}/edit', [CommentController::class, 'edit']);
+
+Route::delete('/notes/{note}/comments/{comment}', [CommentController::class, 'delete']);
+Route::put('/notes/{note}/comments/{comment}', [CommentController::class, 'update']);
+    
 // ノート削除処理
 Route::delete('/notes/{note}', [NoteController::class, 'delete'])
     ->name('notes.delete');
+    

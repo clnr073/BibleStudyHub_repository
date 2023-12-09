@@ -39,8 +39,8 @@
                     @csrf
                     <!-- hiddenフィールドとしてnote_idを追加 -->
                     <input type="hidden" name="new_comment[note_id]" value="{{ $note->id }}">
-                    <input type="text" name="new_comment[text]" placeholder="ここに入力" value="{{ old('new_comment')}}">
-                    <p class="title__error" style="color:red">{{ $errors->first('new_comment') }}</p>
+                    <input type="text" name="new_comment[text]" placeholder="ここに入力" value="{{ old('new_comment.text')}}">
+                    <p class="title__error" style="color:red">{{ $errors->first('new_comment.text') }}</p>
                     <p>聖句を追加</p>
                     @foreach ($comment_testaments as $comment_testament)
                         <lavel>

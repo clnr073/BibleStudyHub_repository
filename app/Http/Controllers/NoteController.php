@@ -26,11 +26,9 @@ class NoteController extends Controller
      * $param Object Note
      * return Response note view
      */
-     public function show(Note $note, Testament $testament)
+     public function show(Note $note)
      {
-         $comment_testament = $testament->get();
-         
-         return view('notes.show')->with(['note' => $note, 'comment_testaments' => $comment_testament]);
+         return view('notes.show')->with(['note' => $note]);
      }
     
     /**
@@ -54,7 +52,6 @@ class NoteController extends Controller
      */
      public function store(Note $note, NoteRequest $request)
      {
-         dd($request);
          $input_note = $request['note'];
          $input_testaments = $request->testaments_array;
          $input_tags = $request->tags_array;
@@ -113,7 +110,7 @@ class NoteController extends Controller
        */
        public function delete(Note $note)
        {
-           $note->delete();
+           $note->delete(); //Modelクラスの関数delete
            return redirect(route('notes.index'));
        }
 }

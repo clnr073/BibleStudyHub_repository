@@ -48,7 +48,6 @@ Route::get('/notes/create', [NoteController::class, 'create'])
 // ノート詳細画面
 Route::get('/notes/{note}', [NoteController::class, 'show'])
     ->name('notes.show');
-Route::post('/notes/{note}', [CommentController::class, 'store']);
 
 // ノート登録処理
 Route::post('/notes', [NoteController::class, 'store'])
@@ -60,6 +59,18 @@ Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
 Route::put('/notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update');
     
+// コメント一覧表示
+Route::get('/notes/{note}/comments', [CommentController::class, 'index']);
+
+//コメント保存処理
+Route::post('/notes/{note}/comments', [CommentController::class, 'store']);
+
+Route::get('/notes/{note}/comments/{comment}/edit', [CommentController::class, 'edit']);
+
+Route::delete('/notes/{note}/comments/{comment}', [CommentController::class, 'delete']);
+Route::put('/notes/{note}/comments/{comment}', [CommentController::class, 'update']);
+    
 // ノート削除処理
 Route::delete('/notes/{note}', [NoteController::class, 'delete'])
     ->name('notes.delete');
+    

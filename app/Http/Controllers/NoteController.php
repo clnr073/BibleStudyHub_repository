@@ -16,6 +16,7 @@ class NoteController extends Controller
      */
     public function index(Note $note)
     {
+        $notes = $note->get();
         return view('notes.index')->with(['notes' => $note->get()]);
     }
     
@@ -28,7 +29,31 @@ class NoteController extends Controller
      */
      public function show(Note $note)
      {
-         return view('notes.show')->with(['note' => $note]);
+         $testaments_v = $note->testaments; //便宜上名前を変更
+         
+         $testaments_by_volume = $testaments_v->groupBy('volume_id');
+         
+         $testaments = $note->testaments()->with('volume')->get(); // 関連付けられた testaments を取得
+         
+         $section_info_by_volume = [];
+         
+         foreach ($testaments as $testament) {
+             $volume_id = $testament->volume->id;
+             
+             if (!isset($section_info_by_volume[$volume_id])) {
+                 $section_info_by_volume[$volume_id] = [
+                     'first_section' => $testament->section,
+                     'last_section' => $testament->section,
+                     ];
+             } else {
+                 $section_info_by_volume[$volume_id]['last_section'] = $testament->section;
+             }
+         }
+         
+         return view('notes.show')->with([
+             'testaments_by_volume' => $testaments_by_volume,
+             'section_info_by_volume' => $section_info_by_volume,
+             'note' => $note]);
      }
     
     /**

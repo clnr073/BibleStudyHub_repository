@@ -17,12 +17,6 @@
                             @endif
                             <p>{{ $note->created_at }}</p>
                             <a href="/notes/{{ $note->id }}">{{ $note->title }}<a>
-                            <div class="testaments">
-                                @foreach ($note->testaments as $testament)
-                                    <h3>{{ $testament->text }}</h3>
-                                    <p>{{ $testament->volume->title }} {{ $testament->chapter }}:{{ $testament->section }}</p>
-                                @endforeach
-                            </div>
                             <div class="note_text">
                                 <p>{{ $note->text }}</p>
                             </div>

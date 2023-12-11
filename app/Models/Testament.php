@@ -72,7 +72,7 @@ class Testament extends Model
      */
     public function getPreviousVolumeLatestChapter($volume_id)
     {
-        $chapter = $this->where('volume_id', '<', $volume_id)
+        $chapter = $this->where('volume_id', '<=', $volume_id)
             ->select('volume_id', \DB::raw('MAX(chapter) as chapter_id'))
             ->groupBy('volume_id')
             ->orderBy('volume_id', 'desc')

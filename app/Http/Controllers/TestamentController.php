@@ -52,6 +52,7 @@ class TestamentController extends Controller
         
         return view('testaments.show')->with([
             'volume' => $volume,
+            'chapter' => $chapter,
             'testaments' => $contents,
             'chapter_set' => $chapter_set,
             'latest_chapter' => $latest_chapter, 

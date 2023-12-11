@@ -11,7 +11,7 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             @foreach ($chapters as $chapter)
-                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">第{{ $chapter }}章</a>
+                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">Chapter {{ $chapter }}</a>
                             @endforeach
                             {{ dump($chapters)}}
                         </div>

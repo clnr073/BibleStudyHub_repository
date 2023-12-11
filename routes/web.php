@@ -35,8 +35,6 @@ require __DIR__.'/auth.php';
 
 Route::get('/testaments', [TestamentController::class, 'index'])->name('testaments.index');
 Route::get('/testaments/volume{volume}', [TestamentController::class, 'displayVolumeWithContents']);
-
-// 聖書詳細画面
 Route::get('/testaments/volume{volume}/chapter{chapter}', [TestamentController::class, 'displayChapterWithContents'])
     ->name('testaments.show');
 

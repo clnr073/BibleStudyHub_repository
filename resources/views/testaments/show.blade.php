@@ -6,7 +6,7 @@
     <body>
         <div class="testaments">
             <div class="py-12">
-                <a href="/testaments">Home</a> > <a href="/testaments/volume{{ $volume }}">Volume {{ $volume }}</a> > <span>Chapter {{ $chapter_set->chapter }}</span>
+                <a href="/testaments">Home</a> > <a href="/testaments/volume{{ $volume }}">Volume {{ $volume }}</a> > <span>Chapter {{ $chapter }}</span>
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
@@ -23,7 +23,7 @@
         <!--現時点のchapterの値に応じて、前後のページに移動するメカニズム -->
         <div class="pagination">
             <br>
-            @if ($volume === 1 and $testament->chapter === 1)
+            @if ($volume == 1 and $chapter == 1)
                 <p></p>
             @elseif ($earliest_chapter->chapter_id === $testament->chapter)
                 <a href="/testaments/volume{{ $volume - 1 }}/chapter{{ $previous_volume_latest_chapter->chapter_id }}">←</a>
@@ -40,6 +40,7 @@
             @endif
             <br>
         </div>
+            {{ $volume }} {{ $chapter}}
             {{ $latest_chapter }}
             {{ $earliest_chapter }}
             {{ $previous_volume_latest_chapter }}

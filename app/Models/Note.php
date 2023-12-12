@@ -49,4 +49,9 @@ class Note extends Model
       {
           return $this->belongsTo(User::class);
       }
+      
+      public function recordSectionInfoByVolumeAndChapter()
+      {
+          //section番号を取得するメソッドを書く
+      }
 }

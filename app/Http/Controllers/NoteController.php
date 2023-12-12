@@ -29,29 +29,49 @@ class NoteController extends Controller
      */
      public function show(Note $note)
      {
-         $testaments_v = $note->testaments; //便宜上名前を変更
+         $testaments_query_builder = $note->testaments;
          
-         $testaments_by_volume = $testaments_v->groupBy('volume_id');
-         
-         $testaments = $note->testaments()->with('volume')->get(); // 関連付けられた testaments を取得
-         
+         // volume_id をキーとし、その下に chapter をキーとした testaments の多重連想配列
+         $testaments_by_volume_and_chapter = $testaments_query_builder->groupBy('volume_id')->map(function ($testaments) {
+             return $testaments->groupBy('chapter');
+         });
+        
+         /**
+          * 各volume_id、chapterごとに、最初のsectionと最後のsectionを記録する処理
+          */
+         // リレーションシップを含むすべてのtestamentsを取得
+         $loaded_testaments_with_volume = $note->testaments()->with('volume')->get();
+        
+         // chapterごとに最初のsectionと最後のsectionを格納する連想配列
          $section_info_by_volume = [];
          
-         foreach ($testaments as $testament) {
+         foreach ($loaded_testaments_with_volume as $testament) {
              $volume_id = $testament->volume->id;
+             $chapter = $testament->chapter;
+             $section = $testament->section;
              
-             if (!isset($section_info_by_volume[$volume_id])) {
-                 $section_info_by_volume[$volume_id] = [
-                     'first_section' => $testament->section,
-                     'last_section' => $testament->section,
+             // $section_info_by_volumeに$volume_id、$chapterに関連づけられたエントリが存在するか確認
+             if (!isset($section_info_by_volume[$volume_id][$chapter])) {
+                 // 存在しないなら新しいvolume_id、$chapter用のエントリを作成
+                 $section_info_by_volume[$volume_id][$chapter] = [
+                     'first_section' => $section,
+                     'last_section' => $section,
                      ];
              } else {
-                 $section_info_by_volume[$volume_id]['last_section'] = $testament->section;
+                 // 最小のsectionを更新
+                 if ($section < $section_info_by_volume[$volume_id][$chapter]['first_section']) {
+                     $section_info_by_volume[$volume_id][$chapter]['first_section'] = $section;
+                 }
+                 
+                 // 最大のsectionを更新
+                 if ($section > $section_info_by_volume[$volume_id][$chapter]['last_section']) {
+                     $section_info_by_volume[$volume_id][$chapter]['last_section'] = $section;
+                 }
              }
          }
-         
+
          return view('notes.show')->with([
-             'testaments_by_volume' => $testaments_by_volume,
+             'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
              'section_info_by_volume' => $section_info_by_volume,
              'note' => $note]);
      }

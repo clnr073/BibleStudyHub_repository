@@ -19,15 +19,11 @@ class CommentController extends Controller
         
         $comment_testament = $testament->get();
         
-        return view('notes.comments.index')->with(['note_id' => $note, 'comments' => $comments, 'comment_testaments' => $comment_testament]);
-    }
-    
-    /**
-     * コメント詳細画面
-     */
-    public function show($comment)
-    {
-        //
+        return view('notes.comments.index')->with([
+            'note_id' => $note,
+            'comments' => $comments,
+            'comment_testaments' => $comment_testament,
+            ]);
     }
      
     /**

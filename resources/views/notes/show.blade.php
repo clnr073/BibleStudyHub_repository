@@ -17,18 +17,25 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             @if ($note->public === 1)
-                                <h1>公開</h1>
+                                <h1>公開ノート</h1>
                             @else
-                                <h1>非公開</h1>
+                                <h1>非公開ノート</h1>
                             @endif
+                            <div class="testaments">
+                                <br>
+                                @foreach ($testaments_by_volume_and_chapter as $volume_id => $chapters)
+                                    @foreach ($chapters as $chapter => $testaments)
+                                        @foreach ($testaments as $testament)
+                                            <p>{{ $testament->text }}</p>
+                                        @endforeach
+                                        <p>{{ $testament->volume->title }} {{ $chapter }}:{{ $section_info_by_volume[$volume_id][$chapter]['first_section'] }}-{{ $section_info_by_volume[$volume_id][$chapter]['last_section'] }}</p>
+                                        <br>
+                                    @endforeach
+                                @endforeach
+                                <br>
+                            </div>
                             <p>{{ $note->created_at }}</p>
                             <h2>{{ $note->title }}</h2>
-                            <div class="testaments">
-                                @foreach ($note->testaments as $testament)
-                                    <h3>{{ $testament->text }}</h3>
-                                    <p>{{ $testament->volume->title }} {{ $testament->chapter }}:{{ $testament->section }}</p>
-                                @endforeach
-                            </div>
                             <p>{{ $note->text }}</p>
                             <div class="tags">
                                 @foreach ($note->tags as $tag)
@@ -55,6 +62,7 @@
             </div>
         </div>
         <!-- デバックステップ -->
+        {{ dump($testament->chapter) }}
         {{ dump($note) }}
     </body>
 </x-app-layout>

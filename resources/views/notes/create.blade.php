@@ -25,12 +25,10 @@
                                 <br>
                                 <h2>聖句</h2>
                                 @foreach ($testaments as $testament)
-                                    <lavel>
-                                        <input type="checkbox" value={{ $testament->id }} name="testaments_array[]" {{ in_array($testament->id, old('testaments_array', [])) ? 'checked' : '' }}>
-                                            {{ $testament->text }}
-                                    </lavel>
-                                    <br>
+                                    <input type="hidden" name="testaments_array[]" value="{{ $testament->id }}">
+                                    <p>{{ $testament->text }}</p>
                                 @endforeach
+                                <br>
                             </div>
                             <div class="title">
                                 <h2>タイトル</h2>

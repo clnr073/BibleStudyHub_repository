@@ -80,14 +80,18 @@ class NoteController extends Controller
      * ノート作成画面
      * $public_valueは、ラジオボタンのchecked属性を動的に制御するために用意
      */
-    public function create(Tag $tag, Testament $testament)
+    public function create(Request $request, Tag $tag)
     {
+        $selected_testaments = $request->input('testaments_array', []);
+       
+        $testaments = Testament::whereIn('id', $selected_testaments)->get();
+        
         $public_value = 'true';
         
         return view('notes.create')->with([
             'public_value' => $public_value,
             'tags' => $tag->get(),
-            'testaments' => $testament->get(),
+            'testaments' => $testaments,
             ]);
     }
     

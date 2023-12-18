@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\Testament;
 use App\Models\Comment;
 use App\Http\Requests\NoteRequest;
+use Cloudinary;
 
 class NoteController extends Controller
 {
@@ -104,6 +105,12 @@ class NoteController extends Controller
          $input_note = $request['note'];
          $input_testaments = $request->testaments_array;
          $input_tags = $request->tags_array;
+         
+         if ($request->file('image')) { //画像ファイルが送られたときだけ処理が実行される
+            //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $input_note += ['image_url' => $image_url];
+         }
          
          $input_note += ['user_id' => $request->user()->id]; // user():requestを送信したユーザーの情報を取得するRequestメソッド
          $note->fill($input_note)->save();

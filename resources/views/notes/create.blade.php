@@ -11,7 +11,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <form action="/notes" method="POST">
+                        <form action="/notes" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="testament">
                                 <label>
@@ -49,6 +49,10 @@
                                             {{ $tag->tag }}
                                     </lavel>
                                 @endforeach
+                            </div>
+                            <div class="image">
+                                <input type="file" name="image">
+                                <p class="image__error" style="color:red">{{ $errors->first('image') }}</p>
                             </div>
                             <input type="submit" value="保存する"/>
                         </form>

@@ -26,6 +26,7 @@ class NoteRequest extends FormRequest
         return [
             'note.title' => 'required',
             'note.text' => 'required',
+            'image' => 'max:2097152',
         ];
     }
 }

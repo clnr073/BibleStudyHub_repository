@@ -52,6 +52,7 @@
                             </div>
                             <div class="image">
                                 <input type="file" name="image">
+                                <p class="image__error" style="color:red">{{ $errors->first('image') }}</p>
                             </div>
                             <input type="submit" value="保存する"/>
                         </form>

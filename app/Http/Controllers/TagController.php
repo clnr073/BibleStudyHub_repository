@@ -21,4 +21,10 @@ class TagController extends Controller
         
         return redirect(route('tags.index'));
     }
+    
+    public function delete(Tag $tag)
+    {
+        $tag->delete();
+        return redirect(route('tags.index'));
+    }
 }

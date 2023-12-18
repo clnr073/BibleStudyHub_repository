@@ -42,9 +42,11 @@
                                     <p>{{ $tag->tag }}</p>
                                 @endforeach
                             </div>
+                            @if ($note->image_url)
                             <div class="image">
                                 <img src="{{ $note->image_url }}" alt="画像が読み込めません。"/>
                             </div>
+                            @endif
                          </div>
                     </div>
                 </div>

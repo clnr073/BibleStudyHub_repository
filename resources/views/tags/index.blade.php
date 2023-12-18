@@ -22,6 +22,11 @@
                         <div class="p-6 text-gray-900">
                             <div class="tags">
                                 <p>{{ $tag->tag }}</p>
+                            </div>
+                            <div class="edit">
+                                <a href="/tags/{{ $tag->id }}/edit">編集する</a>
+                            </div>
+                            <div class="delete">
                                 <form action="/tags/{{ $tag->id }}" id="form_{{ $tag->id }}" method="post">
                                     @csrf
                                     @method('DELETE')

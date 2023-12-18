@@ -81,3 +81,5 @@ Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
 Route::post('/tags', [TagController::class, 'store']);
 
 Route::delete('/tags/{tag}', [TagController::class, 'delete']);
+Route::get('/tags/{tag}/edit', [TagController::class, 'edit']);
+Route::put('/tags/{tag}', [TagController::class, 'update']);

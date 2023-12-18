@@ -9,6 +9,11 @@ class Tag extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'tag',
+        'user_id',
+        ];
+    
     /**
      * Testamentモデルとのリレーションシップ
      */

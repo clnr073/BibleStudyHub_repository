@@ -11,4 +11,14 @@ class TagController extends Controller
     {
         return view('tags.index')->with(['tags' => $tag->get()]);
     }
+    
+    public function store(Request $request, Tag $tag)
+    {
+        $input_tag = $request['tag'];
+        $input_tag += ['user_id' => $request->user()->id];
+        
+        $tag->fill($input_tag)->save();
+        
+        return redirect(route('tags.index'));
+    }
 }

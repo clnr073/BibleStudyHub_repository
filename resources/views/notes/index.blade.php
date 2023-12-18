@@ -25,11 +25,16 @@
                                     <p>{{ $tag->tag }}</p>
                                 @endforeach
                             </div>
-                            <form action="/notes/{{ $note->id }}" id="form_{{ $note->id }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" onclick="deleteNote({{ $note->id }})">このノートを削除する</button>
-                            </form>
+                            <div class="edit">
+                                <a href="/notes/{{ $note->id }}/edit">編集する</a>
+                            </div>
+                            <div class="delete">
+                                <form action="/notes/{{ $note->id }}" id="form_{{ $note->id }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" onclick="deleteNote({{ $note->id }})">このノートを削除する</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

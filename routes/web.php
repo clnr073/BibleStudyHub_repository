@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestamentController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,4 +75,11 @@ Route::put('/notes/{note}/comments/{comment}', [CommentController::class, 'updat
 // ノート削除処理
 Route::delete('/notes/{note}', [NoteController::class, 'delete'])
     ->name('notes.delete');
-    
+// タグ一覧表示
+Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+// タグ保存処理
+Route::post('/tags', [TagController::class, 'store']);
+
+Route::delete('/tags/{tag}', [TagController::class, 'delete']);
+Route::get('/tags/{tag}/edit', [TagController::class, 'edit']);
+Route::put('/tags/{tag}', [TagController::class, 'update']);

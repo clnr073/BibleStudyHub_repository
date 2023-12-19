@@ -83,17 +83,32 @@ class NoteController extends Controller
      */
     public function create(Request $request, Tag $tag)
     {
-        $selected_testaments = $request->input('testaments_array', []);
-       
-        $testaments = Testament::whereIn('id', $selected_testaments)->get();
+        // 直前にアクセスしたリンクに戻るための$testamentデータ
+        $testamentValue = $request->query('ids');
+        $last_selected_testament = Testament::where('id', $testamentValue)->first();
+
+        // Sessionにリクエストデータtestament_arrayを保存する処理
+        $selected_testaments = $request->query('ids', []); // リクエストデータからtestament_arrayを取得
+        $existing_testaments = session('ids', []); // Sessionに保存されている既存のtestament_arrayを取得
         
+        $merged_testaments = array_merge($existing_testaments, $selected_testaments); // 新しい選択されたtestamentsを既存のtestament_arrayに追加
+        $unique_testaments = array_unique($merged_testaments); // 重複を除いたユニークな値のみを取得
+        session(['ids' => $unique_testaments]); // Sessionに更新したtestament_arrayを保存
+        
+        $all_session_data = session('ids', []); //デバックのためのデータ
+    
+        // 更新したtestament_arrayを使ってTestamentモデルからデータを取得
+        $testaments = Testament::whereIn('id', $unique_testaments)->get();
+    
         $public_value = 'true';
-        
+    
         return view('notes.create')->with([
             'public_value' => $public_value,
             'tags' => $tag->get(),
+            'all_session_data' => $all_session_data,
             'testaments' => $testaments,
-            ]);
+            'last_selected_testament' => $last_selected_testament,
+        ]);
     }
     
     /**
@@ -103,7 +118,7 @@ class NoteController extends Controller
      public function store(Note $note, NoteRequest $request)
      {
          $input_note = $request['note'];
-         $input_testaments = $request->testaments_array;
+         $input_testaments = $request->testament_array;
          $input_tags = $request->tags_array;
          
          if ($request->file('image')) { //画像ファイルが送られたときだけ処理が実行される
@@ -119,6 +134,7 @@ class NoteController extends Controller
          $note->testaments()->attach($input_testaments);
          $note->tags()->attach($input_tags);
          
+         session()->forget('ids'); // 既存のtestament_arrayを初期化
          return redirect(route('notes.index'));
      }
      

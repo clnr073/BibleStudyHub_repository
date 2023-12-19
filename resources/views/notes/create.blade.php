@@ -13,21 +13,26 @@
                     <div class="p-6 text-gray-900">
                         <form action="/notes" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="testament">
-                                <label>
-                                    <input type="radio" value="1" name="note[public]" {{ $public_value == true ? 'checked' : '' }}>
-                                    公開ノート
-                                </label>
-                                <label>
-                                    <input type="radio" value="0" name="note[public]" {{ $public_value == false ? 'checked' : '' }}>
-                                    非公開ノート
-                                </label>
-                                <br>
+                            <label>
+                                <input type="radio" value="1" name="note[public]" {{ $public_value == true ? 'checked' : '' }}>
+                                公開ノート
+                            </label>
+                            <label>
+                                <input type="radio" value="0" name="note[public]" {{ $public_value == false ? 'checked' : '' }}>
+                                非公開ノート
+                            </label>
+                            <br>
+                            <div class="testaments">
                                 <h2>聖句</h2>
                                 @foreach ($testaments as $testament)
                                     <input type="hidden" name="testaments_array[]" value="{{ $testament->id }}">
                                     <p>{{ $testament->text }}</p>
                                 @endforeach
+                                @if (count($testaments) === 0 or !$last_selected_testament)
+                                <a href="/testaments">聖句を追加</a>
+                                @else
+                                <a href="/testaments/volume{{ $last_selected_testament->volume->id }}/chapter{{ $last_selected_testament->chapter }}">聖句を追加</a>
+                                @endif
                                 <br>
                             </div>
                             <div class="title">
@@ -62,5 +67,8 @@
         </div>
         <!-- デバックステップ: oldヘルパーの動作確認 -->
         <pre><code>{{ var_dump(session()->get('_old_input')) }}</code></pre>
+        @foreach($all_session_data as $key => $value)
+            <p>{{ $key }}: {{ $value }}</p>
+        @endforeach
     </body>
 </x-app-layout>

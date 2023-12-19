@@ -8,16 +8,16 @@
         <form action="/notes/{{ $note->id }}" method="POST">
             @csrf
             @method('PUT')
+            <label>
+                <input type="radio" value="1" name="note[public]" {{ $public_value == true ? 'checked' : '' }}>
+                公開ノート
+            </label>
+            <label>
+                <input type="radio" value="0" name="note[public]" {{ $public_value == false ? 'checked' : '' }}>
+                非公開ノート
+            </label>
+            <br>
             <div class="testament">
-                <label>
-                    <input type="radio" value="1" name="note[public]" {{ $public_value == true ? 'checked' : '' }}>
-                    公開ノート
-                </label>
-                <label>
-                    <input type="radio" value="0" name="note[public]" {{ $public_value == false ? 'checked' : '' }}>
-                    非公開ノート
-                </label>
-                <br>
                 <h2>聖句</h2>
                 @foreach ($testaments as $testament)
                     <lavel>

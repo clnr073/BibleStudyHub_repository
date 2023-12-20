@@ -23,7 +23,6 @@
                             </label>
                             <br>
                             <div class="testaments">
-                                <h2>聖句</h2>
                                 @foreach ($testaments as $testament)
                                     <input type="hidden" name="testaments_array[]" value="{{ $testament->id }}">
                                     <p>{{ $testament->text }}</p>
@@ -60,6 +59,7 @@
                                 <p class="image__error" style="color:red">{{ $errors->first('image') }}</p>
                             </div>
                             <input type="submit" value="保存する"/>
+                            <a href="/notes?cancel_notetake=true">キャンセル</a>
                         </form>
                     </div>
                 </div>
@@ -67,8 +67,9 @@
         </div>
         <!-- デバックステップ: oldヘルパーの動作確認 -->
         <pre><code>{{ var_dump(session()->get('_old_input')) }}</code></pre>
-        @foreach($all_session_data as $key => $value)
+        @foreach($session_testaments_data as $key => $value)
             <p>{{ $key }}: {{ $value }}</p>
         @endforeach
+        {{ var_dump($all_session_data) }}
     </body>
 </x-app-layout>

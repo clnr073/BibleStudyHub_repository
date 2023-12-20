@@ -8,7 +8,7 @@
             <div class="py-12">
                 <a href="/testaments">Home</a> > <a href="/testaments/volume{{ $volume }}">Volume {{ $volume }}</a> > <span>Chapter {{ $chapter }}</span>
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <a href="#" id="sendData">ノートを作成する</a>
+                    <a href="#" id="sendData">選択した聖句からノートを作成する</a>
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             <h2>{{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}章</h2>

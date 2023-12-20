@@ -41,7 +41,7 @@ class TestamentController extends Controller
         
         $chapter_set = $contents->first();
         
-        $selected_testaments = session('ids', []); //Sessionからすでに選ばれた配列を取得
+        $selected_testaments = session('ids_' . $volume . '_' . $chapter, []); //Sessionからすでに選ばれた配列を取得
         $testament_id = collect($selected_testaments); // Collectionに変換
         
         // 最小のchapterを取得

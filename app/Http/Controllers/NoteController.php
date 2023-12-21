@@ -31,13 +31,12 @@ class NoteController extends Controller
                 }
             }
             
-            $unique_keys_to_delete = array_merge($keys_to_delete); // 重複するキーを削除
+            $unique_keys_to_delete = array_unique($keys_to_delete); // 重複するキーを削除
             // 配列に保存されたセッションキーを一括で削除
             session()->forget($unique_keys_to_delete);
-            session()->forget(['volume', 'chapter', 'testament_array']);
+            session()->forget(['editing', 'volume', 'chapter', 'testament_array']);
         }
         
-        $notes = $note->get();
         return view('notes.index')->with(['notes' => $note->get()]);
     }
     
@@ -206,7 +205,7 @@ class NoteController extends Controller
              }
          }
         
-         $unique_key_to_delete = array_merge($keys_to_delete); // 重複するキーを削除
+         $unique_key_to_delete = array_unique($keys_to_delete); // 重複するキーを削除
          // 配列に保存されたセッションキーを一括で削除
          session()->forget($unique_key_to_delete);
          session()->forget(['volume', 'chapter', 'testament_array']);
@@ -359,7 +358,7 @@ class NoteController extends Controller
               }
           }
         
-          $unique_key_to_delete = array_merge($keys_to_delete); // 重複するキーを削除
+          $unique_key_to_delete = array_unique($keys_to_delete); // 重複するキーを削除
           // 配列に保存されたセッションキーを一括で削除
           session()->forget($unique_key_to_delete);
           session()->forget(['editing', 'volume', 'chapter', 'testament_array']);

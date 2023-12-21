@@ -50,7 +50,7 @@ class NoteController extends Controller
      */
      public function show(Note $note)
      {
-         $testaments_query_builder = $note->testaments;
+         $testaments_query_builder = $note->testaments->sortBy('id');
          
          // volume_id をキーとし、その下に chapter をキーとした testaments の多重連想配列
          $testaments_by_volume_and_chapter = $testaments_query_builder->groupBy('volume_id')->map(function ($testaments) {
@@ -90,7 +90,7 @@ class NoteController extends Controller
                  }
              }
          }
-
+        
          return view('notes.show')->with([
              'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
              'section_info_by_volume' => $section_info_by_volume,

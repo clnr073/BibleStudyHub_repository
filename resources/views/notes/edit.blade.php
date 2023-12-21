@@ -17,15 +17,17 @@
                 非公開ノート
             </label>
             <br>
-            <div class="testament">
-                <h2>聖句</h2>
+           <div class="testaments">
                 @foreach ($testaments as $testament)
-                    <lavel>
-                        <input type="checkbox" value={{ $testament->id }} name="testaments_array[]" {{ $testament_id->contains($testament->id) ? 'checked' : '' }}>
-                            {{ $testament->text }}
-                    </lavel>
-                    <br>
+                    <input type="hidden" name="testaments_array[]" value="{{ $testament->id }}">
+                    <p>{{ $testament->text }}</p>
                 @endforeach
+                @if (count($testaments) === 0 or !$last_selected_testament)
+                <a href="/testaments">聖句を追加</a>
+                @else
+                <a href="/testaments/volume{{ $last_selected_testament->volume->id }}/chapter{{ $last_selected_testament->chapter }}">聖句を追加</a>
+                @endif
+                <br>
             </div>
             <div class="title">
                 <h2>タイトル</h2>

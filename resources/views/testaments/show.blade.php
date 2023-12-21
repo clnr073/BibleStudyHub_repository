@@ -8,12 +8,12 @@
             <div class="py-12">
                 <a href="/testaments">Home</a> > <a href="/testaments/volume{{ $volume }}">Volume {{ $volume }}</a> > <span>Chapter {{ $chapter }}</span>
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <a href="#" id="sendData">選択した聖句からノートを作成する</a>
+                    <a href="#" id="sendData">ノートを作成する</a>
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             <h2>{{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}章</h2>
                             @foreach ($testaments as $testament)
-                                <input type="checkbox" value={{ $testament->id }} name="ids[]" {{ $testament_id->contains($testament->id) ? 'checked' : '' }}>
+                                <input type="checkbox" value={{ $testament->id }} name="testaments_array[]">
                                 <small>{{ $testament->section }}</small> {{ $testament->text }}<br>
                             @endforeach
                         </div>
@@ -53,19 +53,24 @@
             e.preventDefault(); // デフォルトのリンク挙動を無効化
         
             // 選択されたチェックボックスの値を収集
-            var selectedTestaments = document.querySelectorAll('input[name="ids[]"]:checked');
+            var selectedTestaments = document.querySelectorAll('input[name="testaments_array[]"]:checked');
             var values = [];
-            selectedTestaments.forEach(function(id) {
-                values.push(id.value);
+            selectedTestaments.forEach(function(testament) {
+                values.push(testament.value);
             });
         
             // チェックボックスが1つ以上選択されている場合
             if (values.length > 0) {
                 // クエリパラメータを作成
-                var queryString = 'ids[]=' + values.join('&ids[]=');
-                
-                // GETリクエストを送信するURLを作成
-                var url = '/notes/create?' + queryString;
+                var queryString = 'testaments_array[]=' + values.join('&testaments_array[]=');
+        
+                // 判定したいnote_idがあるかどうかをチェック
+                @if(isset($note_id))
+                    var note_id = {{ $note_id }};
+                    var url = '/notes/' + note_id + '/edit?' + queryString;
+                @else
+                    var url = '/notes/create?' + queryString;
+                @endif
         
                 // GETリクエストを実行
                 window.location.href = url;

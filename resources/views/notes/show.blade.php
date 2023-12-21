@@ -66,8 +66,5 @@
                 </div>
             </div>
         </div>
-        <!-- デバックステップ -->
-        {{ dump($testament->chapter) }}
-        {{ dump($note) }}
     </body>
 </x-app-layout>

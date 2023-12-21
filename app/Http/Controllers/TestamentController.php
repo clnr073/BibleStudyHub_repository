@@ -41,7 +41,7 @@ class TestamentController extends Controller
         
         $chapter_set = $contents->first();
         
-        $selected_testaments = session('ids_' . $volume . '_' . $chapter, []); //Sessionからすでに選ばれた配列を取得
+        $selected_testaments = session('testament_array', []); //Sessionからすでに選ばれた配列を取得
         $testament_id = collect($selected_testaments); // Collectionに変換
         
         // 最小のchapterを取得
@@ -53,6 +53,11 @@ class TestamentController extends Controller
         //インスタンスのvolume_id未満のvolume_idの中で最新のchapterを取得                         
         $previous_volume_latest_chapter = $testament->getPreviousVolumeLatestChapter($volume);
         
+        // noteの編集中であれば、noteのidを取得
+        if(session()->has('editing')) {
+            $note_id = session('editing', []);
+        }
+        
         return view('testaments.show')->with([
             'volume' => $volume,
             'chapter' => $chapter,
@@ -61,6 +66,8 @@ class TestamentController extends Controller
             'testament_id' => $testament_id,
             'latest_chapter' => $latest_chapter, 
             'earliest_chapter' => $earliest_chapter,
-            'previous_volume_latest_chapter' => $previous_volume_latest_chapter]);
+            'previous_volume_latest_chapter' => $previous_volume_latest_chapter,
+            'note_id' => $note_id ?? null,
+            ]);
     }
 }

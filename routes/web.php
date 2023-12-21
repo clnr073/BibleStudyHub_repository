@@ -79,7 +79,9 @@ Route::delete('/notes/{note}', [NoteController::class, 'delete'])
 Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
 // タグ保存処理
 Route::post('/tags', [TagController::class, 'store']);
-
+// タグ削除処理
 Route::delete('/tags/{tag}', [TagController::class, 'delete']);
+// タグ編集処理
 Route::get('/tags/{tag}/edit', [TagController::class, 'edit']);
+// タグ更新処理
 Route::put('/tags/{tag}', [TagController::class, 'update']);

@@ -55,17 +55,29 @@
             // 選択されたチェックボックスの値を収集
             var selectedTestaments = document.querySelectorAll('input[name="ids[]"]:checked');
             var values = [];
-            selectedTestaments.forEach(function(id) {
-                values.push(id.value);
+            selectedTestaments.forEach(function(testament) {
+                values.push(testament.value);
             });
         
             // チェックボックスが1つ以上選択されている場合
             if (values.length > 0) {
                 // クエリパラメータを作成
                 var queryString = 'ids[]=' + values.join('&ids[]=');
-                
-                // GETリクエストを送信するURLを作成
-                var url = '/notes/create?' + queryString;
+        
+                // 判定したいnote_idがあるかどうかをチェック
+                @if (isset($edit_note_id))
+                    var note_id = {{ $edit_note_id }};
+                    var url = '/notes/' + note_id + '/edit?' + queryString;
+                @elseif (isset($comment_create_note_id))
+                    var note_id = {{ $comment_create_note_id }};
+                    var url = '/notes/' + note_id + '/comments?' + queryString;
+                @elseif (isset($comment_edit_ids))
+                    var note_id = {{ $comment_edit_ids[0] }};
+                    var comment_id = {{ $comment_edit_ids[1] }};
+                    var url = '/notes/' + note_id + '/comments/' + comment_id + '/edit?' + queryString;
+                @else
+                    var url = '/notes/create?' + queryString;
+                @endif
         
                 // GETリクエストを実行
                 window.location.href = url;

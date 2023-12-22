@@ -59,7 +59,7 @@
                                 <p class="image__error" style="color:red">{{ $errors->first('image') }}</p>
                             </div>
                             <input type="submit" value="保存する"/>
-                            <a href="/notes?cancel_notetake=true">キャンセル</a>
+                            <a href="/notes?cancel_note_take=true">キャンセル</a>
                         </form>
                     </div>
                 </div>

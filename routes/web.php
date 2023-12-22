@@ -58,6 +58,7 @@ Route::post('/notes', [NoteController::class, 'store'])
 // ノート編集処理
 Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
     ->name('notes.edit');
+// ノート更新処理
 Route::put('/notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update');
     
@@ -67,9 +68,13 @@ Route::get('/notes/{note}/comments', [CommentController::class, 'index']);
 //コメント保存処理
 Route::post('/notes/{note}/comments', [CommentController::class, 'store']);
 
+// コメント編集処理
 Route::get('/notes/{note}/comments/{comment}/edit', [CommentController::class, 'edit']);
 
+// コメント削除処理
 Route::delete('/notes/{note}/comments/{comment}', [CommentController::class, 'delete']);
+
+// コメント更新処理
 Route::put('/notes/{note}/comments/{comment}', [CommentController::class, 'update']);
     
 // ノート削除処理
@@ -79,7 +84,9 @@ Route::delete('/notes/{note}', [NoteController::class, 'delete'])
 Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
 // タグ保存処理
 Route::post('/tags', [TagController::class, 'store']);
-
+// タグ削除処理
 Route::delete('/tags/{tag}', [TagController::class, 'delete']);
+// タグ編集処理
 Route::get('/tags/{tag}/edit', [TagController::class, 'edit']);
+// タグ更新処理
 Route::put('/tags/{tag}', [TagController::class, 'update']);

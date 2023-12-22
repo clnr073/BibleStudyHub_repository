@@ -12,15 +12,20 @@
             <input type="hidden" name="new_comment[note_id]" value="{{ $note_id }}">
             <input type="text" name="new_comment[text]" placeholder="ここに入力" value="{{ $comment->text }}">
             <p class="title__error" style="color:red">{{ $errors->first('new_comment.text') }}</p>
-            <p>聖句を追加</p>
-            @foreach ($testaments as $testament)
-                <lavel>
-                    <input type="checkbox" value={{ $testament->id }} name="testaments_array[]" {{ $testament_id->contains($testament->id) ? 'checked' : '' }}>
-                        {{ $testament->text }}
-                </lavel>
+            <div class="testaments">
+                @foreach ($testaments as $testament)
+                    <input type="hidden" name="testaments_array[]" value="{{ $testament->id }}">
+                    <p>{{ $testament->text }}</p>
+                @endforeach
+                @if (count($testaments) === 0 or !$last_selected_testament)
+                <a href="/testaments">聖句を追加</a>
+                @else
+                <a href="/testaments/volume{{ $last_selected_testament->volume->id }}/chapter{{ $last_selected_testament->chapter }}">聖句を追加</a>
+                @endif
                 <br>
-            @endforeach
+            </div>
             <input type="submit" value="保存する"/>
+            <a href="/notes/{{ $note_id }}/comments?cancel_comment_take=true">変更をキャンセル</a>
         </form>
         <div class="footer">
             <a href="/notes/{{ $note_id }}/comments">戻る</a>

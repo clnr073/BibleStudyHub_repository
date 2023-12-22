@@ -17,7 +17,7 @@ class NoteController extends Controller
      */
     public function index(Request $request, Note $note)
     {
-        if ($request->has('cancel_notetake')) {
+        if ($request->has('cancel_note_take')) {
             // sessionからvolumeキー、chapterキーの値を取得
             $volumes = session('volume', []);
             $chapters = session('chapter', []);
@@ -34,7 +34,13 @@ class NoteController extends Controller
             $unique_keys_to_delete = array_unique($keys_to_delete); // 重複するキーを削除
             // 配列に保存されたセッションキーを一括で削除
             session()->forget($unique_keys_to_delete);
-            session()->forget(['editing', 'volume', 'chapter', 'testament_array']);
+            session()->forget([
+             'comment_creating',
+             'note_editing,',
+             'volume',
+             'chapter',
+             'testament_array',
+             ]);
         }
         
         return view('notes.index')->with(['notes' => $note->get()]);
@@ -208,7 +214,14 @@ class NoteController extends Controller
          $unique_key_to_delete = array_unique($keys_to_delete); // 重複するキーを削除
          // 配列に保存されたセッションキーを一括で削除
          session()->forget($unique_key_to_delete);
-         session()->forget(['volume', 'chapter', 'testament_array']);
+         session()->forget([
+             'comment_editing',
+             'comment_creating',
+             'note_editing,',
+             'volume',
+             'chapter',
+             'testament_array',
+             ]);
          
          return redirect(route('notes.index'));
      }
@@ -219,12 +232,12 @@ class NoteController extends Controller
       public function edit(Note $note, Tag $tag, Request $request)
       {
           // sessionに編集中のデータがない場合の処理
-          if (!session()->has('editing')) {
+          if (!session()->has('note_editing')) {
               // 編集するノートのtestamentsをsessionに保存する
               // 特定の$noteに関連付けられたtestamentsからvolume_idとchapterの一意な値を抽出
               // それらの組み合わせごとに一致するtestamentsのidをセッションに保存する
               $note_id = $note->id;
-              session(['editing' => $note_id]); // sessionに編集しているnoteのidを保存
+              session(['note_editing' => $note_id]); // sessionに編集しているnoteのidを保存
               
               $note_volumes = $note->testaments->pluck('volume_id')->toArray(); // $noteの持つtestamentsのvolume_idを配列で取得
               $note_chapters = $note->testaments->pluck('chapter')->toArray(); // $noteの持つtestamentsのchapterを配列で取得
@@ -361,7 +374,14 @@ class NoteController extends Controller
           $unique_key_to_delete = array_unique($keys_to_delete); // 重複するキーを削除
           // 配列に保存されたセッションキーを一括で削除
           session()->forget($unique_key_to_delete);
-          session()->forget(['editing', 'volume', 'chapter', 'testament_array']);
+          session()->forget([
+             'comment_editing',
+             'comment_creating',
+             'note_editing,',
+             'volume',
+             'chapter',
+             'testament_array',
+             ]);
           
           return redirect('/notes/' . $note->id);
       }

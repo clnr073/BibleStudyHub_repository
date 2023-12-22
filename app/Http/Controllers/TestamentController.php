@@ -53,9 +53,17 @@ class TestamentController extends Controller
         //インスタンスのvolume_id未満のvolume_idの中で最新のchapterを取得                         
         $previous_volume_latest_chapter = $testament->getPreviousVolumeLatestChapter($volume);
         
-        // noteの編集中であれば、noteのidを取得
-        if(session()->has('editing')) {
-            $note_id = session('editing', []);
+        // ノートまたはコメントの作成・編集中であれば、noteのidを取得
+        if(session()->has('note_editing')) {
+            $edit_note_id = session('note_editing', []);
+        }
+        
+        if (session()->has('comment_creating')) {
+            $comment_create_note_id = session('comment_creating', []);
+        }
+        
+        if (session()->has('comment_editing')) {
+            $comment_edit_ids = session('comment_editing', []);
         }
         
         return view('testaments.show')->with([
@@ -67,7 +75,9 @@ class TestamentController extends Controller
             'latest_chapter' => $latest_chapter, 
             'earliest_chapter' => $earliest_chapter,
             'previous_volume_latest_chapter' => $previous_volume_latest_chapter,
-            'note_id' => $note_id ?? null,
+            'note_id' => $edit_note_id ?? null,
+            'comment_create_note_id' => $comment_create_note_id ?? null,
+            'comment_edit_ids' => $comment_edit_ids ?? null,
             ]);
     }
 }

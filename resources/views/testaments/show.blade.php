@@ -65,9 +65,16 @@
                 var queryString = 'ids[]=' + values.join('&ids[]=');
         
                 // 判定したいnote_idがあるかどうかをチェック
-                @if(isset($note_id))
-                    var note_id = {{ $note_id }};
+                @if (isset($edit_note_id))
+                    var note_id = {{ $edit_note_id }};
                     var url = '/notes/' + note_id + '/edit?' + queryString;
+                @elseif (isset($comment_create_note_id))
+                    var note_id = {{ $comment_create_note_id }};
+                    var url = '/notes/' + note_id + '/comments?' + queryString;
+                @elseif (isset($comment_edit_ids))
+                    var note_id = {{ $comment_edit_ids[0] }};
+                    var comment_id = {{ $comment_edit_ids[1] }};
+                    var url = '/notes/' + note_id + '/comments/' + comment_id + '/edit?' + queryString;
                 @else
                     var url = '/notes/create?' + queryString;
                 @endif

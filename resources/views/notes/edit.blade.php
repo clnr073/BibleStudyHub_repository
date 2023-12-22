@@ -50,7 +50,7 @@
                 @endforeach
             </div>
             <input type="submit" value="保存する"/>
-            <a href="/notes?cancel_notetake=true">キャンセル</a>
+            <a href="/notes?cancel_note_take=true">変更をキャンセル</a>
         </form>
         <div class="footer">
             <a href="{{ route('notes.index') }}">戻る</a>

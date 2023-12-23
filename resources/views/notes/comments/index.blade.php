@@ -28,6 +28,9 @@
                     </div>
                 </div>
             @endforeach
+            <div class='paginate'>
+                {{ $comments->links() }}
+            </div>
         </div>
         <div class="new_comment">
             <br>

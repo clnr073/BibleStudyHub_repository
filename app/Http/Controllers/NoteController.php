@@ -37,7 +37,7 @@ class NoteController extends Controller
             session()->forget([
                  'comment_editing',
                  'comment_creating',
-                 'note_editing,',
+                 'note_editing',
                  'volume',
                  'chapter',
                  'testament_array',
@@ -218,7 +218,7 @@ class NoteController extends Controller
          session()->forget([
              'comment_editing',
              'comment_creating',
-             'note_editing,',
+             'note_editing',
              'volume',
              'chapter',
              'testament_array',

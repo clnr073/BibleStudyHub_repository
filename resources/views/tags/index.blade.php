@@ -36,6 +36,9 @@
                         </div>
                     </div>
                 @endforeach
+                <div class='paginate'>
+                    {{ $tags->links() }}
+                </div>
             </div>
         </div>
     </body>

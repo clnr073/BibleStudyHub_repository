@@ -17,9 +17,6 @@
                             @endif
                             <p>{{ $note->created_at }}</p>
                             <a href="/notes/{{ $note->id }}">{{ $note->title }}<a>
-                            <div class="note_text">
-                                <p>{{ $note->text }}</p>
-                            </div>
                             <div class="note_tag">
                                 @foreach ($note->tags as $tag)
                                     <p>{{ $tag->tag }}</p>
@@ -40,8 +37,9 @@
                 </div>
                 <br>
             @endforeach
-            <!-- デバックステップ -->
-            {{ dump($notes) }}
+            <div class='paginate'>
+                {{ $notes->links() }}
+            </div>
         </div>
         <script>
             function deleteNote(id) {

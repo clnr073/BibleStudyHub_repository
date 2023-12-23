@@ -55,4 +55,10 @@ class Note extends Model
       {
           //section番号を取得するメソッドを書く
       }
+      
+      public function getPaginateByLimit(int $limit_count = 4)
+      {
+          // updated_atで降順に並べたあと、limitで件数制限をかける
+          return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+      }
 }

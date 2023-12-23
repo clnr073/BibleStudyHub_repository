@@ -12,10 +12,15 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             <h2>{{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}章</h2>
-                            @foreach ($testaments as $testament)
-                                <input type="checkbox" value={{ $testament->id }} name="ids[]" {{ $testament_id->contains($testament->id) ? 'checked' : '' }}>
-                                <small>{{ $testament->section }}</small> {{ $testament->text }}<br>
-                            @endforeach
+                                @foreach ($testaments as $testament)
+                                     <label>
+                                        <input type="checkbox" value={{ $testament->id }} name="ids[]" {{ $testament_id->contains($testament->id) ? 'checked' : '' }}>
+                                            <span>
+                                                <small>{{ $testament->section }}</small> {{ $testament->text }}
+                                            </span>
+                                     <label>
+                                @endforeach
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -39,13 +44,8 @@
             @else
                 <a href="/testaments/volume{{ $volume }}/chapter{{ $testament->chapter + 1 }}">→</a>
             @endif
-            <br>
         </div>
-            {{ $volume }} {{ $chapter}}
-            {{ $latest_chapter }}
-            {{ $earliest_chapter }}
-            {{ $previous_volume_latest_chapter }}
-            {{ dump($testaments) }}
+        {{ var_dump($all_session_data) }}
     </body>
     <script>
         // aタグをクリックした際の処理

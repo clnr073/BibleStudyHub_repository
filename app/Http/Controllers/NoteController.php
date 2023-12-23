@@ -35,15 +35,16 @@ class NoteController extends Controller
             // 配列に保存されたセッションキーを一括で削除
             session()->forget($unique_keys_to_delete);
             session()->forget([
-             'comment_creating',
-             'note_editing,',
-             'volume',
-             'chapter',
-             'testament_array',
+                 'comment_editing',
+                 'comment_creating',
+                 'note_editing,',
+                 'volume',
+                 'chapter',
+                 'testament_array',
              ]);
         }
         
-        return view('notes.index')->with(['notes' => $note->get()]);
+        return view('notes.index')->with(['notes' => $note->getPaginateByLimit()]);
     }
     
     /**
@@ -202,7 +203,7 @@ class NoteController extends Controller
          $volumes = session('volume', []);
          $chapters = session('chapter', []);
         
-         $key_to_delete = []; // 削除するセッションキーの配列
+         $keys_to_delete = []; // 削除するセッションキーの配列
         
          foreach ($volumes as $volume) {
              foreach ($chapters as $chapter) {
@@ -362,7 +363,7 @@ class NoteController extends Controller
           $volumes = session('volume', []);
           $chapters = session('chapter', []);
         
-          $key_to_delete = []; // 削除するセッションキーの配列
+          $keys_to_delete = []; // 削除するセッションキーの配列
         
           foreach ($volumes as $volume) {
               foreach ($chapters as $chapter) {
@@ -377,7 +378,7 @@ class NoteController extends Controller
           session()->forget([
              'comment_editing',
              'comment_creating',
-             'note_editing,',
+             'note_editing',
              'volume',
              'chapter',
              'testament_array',

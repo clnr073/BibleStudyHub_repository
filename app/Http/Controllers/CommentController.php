@@ -32,16 +32,13 @@ class CommentController extends Controller
             // 配列に保存されたセッションキーを一括で削除
             session()->forget($unique_keys_to_delete);
             session()->forget([
-             'comment_creating',
-             'note_editing,',
-             'volume',
-             'chapter',
-             'testament_array',
+                 'comment_editing',
+                 'comment_creating',
+                 'note_editing,',
+                 'volume',
+                 'chapter',
+                 'testament_array',
              ]);
-        }
-        
-        if (!session()->has('comment_creating')) {
-            session(['comment_creating' => $note]);
         }
         
         // クエリパラメータidsが送られた場合の処理
@@ -124,7 +121,7 @@ class CommentController extends Controller
          $volumes = session('volume', []);
          $chapters = session('chapter', []);
         
-         $key_to_delete = []; // 削除するセッションキーの配列
+         $keys_to_delete = []; // 削除するセッションキーの配列
         
          foreach ($volumes as $volume) {
              foreach ($chapters as $chapter) {
@@ -283,7 +280,7 @@ class CommentController extends Controller
           $volumes = session('volume', []);
           $chapters = session('chapter', []);
         
-          $key_to_delete = []; // 削除するセッションキーの配列
+          $keys_to_delete = []; // 削除するセッションキーの配列
         
           foreach ($volumes as $volume) {
               foreach ($chapters as $chapter) {

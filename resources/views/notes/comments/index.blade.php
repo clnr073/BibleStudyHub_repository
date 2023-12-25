@@ -28,6 +28,9 @@
                     </div>
                 </div>
             @endforeach
+            <div class='paginate'>
+                {{ $comments->links() }}
+            </div>
         </div>
         <div class="new_comment">
             <br>
@@ -47,7 +50,7 @@
                                     <p>{{ $testament->text }}</p>
                                 @endforeach
                                 @if (count($testaments) === 0 or !$last_selected_testament)
-                                <a href="/testaments">聖句を追加</a>
+                                <a href="/testaments?comment_create={{ $note_id }}">聖句を追加</a>
                                 @else
                                 <a href="/testaments/volume{{ $last_selected_testament->volume->id }}/chapter{{ $last_selected_testament->chapter }}">聖句を追加</a>
                                 @endif

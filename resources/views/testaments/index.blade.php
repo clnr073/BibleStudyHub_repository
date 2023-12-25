@@ -14,7 +14,6 @@
                                 <a href="/testaments/volume{{ $volume->id }}">{{ $volume->title }}</a>
                                 <br>
                             @endforeach
-                            {{ dump($volumes)}}
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,6 @@
                             @foreach ($chapters as $chapter)
                                 <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">Chapter {{ $chapter }}</a>
                             @endforeach
-                            {{ dump($chapters)}}
                         </div>
                     </div>
                 </div>

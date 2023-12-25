@@ -5,6 +5,13 @@
     
     <body>
         <div class="notes">
+            <div class="tags">
+                @foreach ($tags as $tag)
+                    <span>
+                        <a href="/notes?tag={{ $tag->id }}">{{ $tag->tag }}</a>
+                    </span>
+                @endforeach
+            </div>
             <a href="{{ route('notes.create') }}">ノートを書く</a>
             @foreach($notes as $note)
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -17,9 +24,6 @@
                             @endif
                             <p>{{ $note->created_at }}</p>
                             <a href="/notes/{{ $note->id }}">{{ $note->title }}<a>
-                            <div class="note_text">
-                                <p>{{ $note->text }}</p>
-                            </div>
                             <div class="note_tag">
                                 @foreach ($note->tags as $tag)
                                     <p>{{ $tag->tag }}</p>
@@ -40,8 +44,9 @@
                 </div>
                 <br>
             @endforeach
-            <!-- デバックステップ -->
-            {{ dump($notes) }}
+            <div class='paginate'>
+                {{ $notes->links() }}
+            </div>
         </div>
         <script>
             function deleteNote(id) {

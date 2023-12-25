@@ -9,7 +9,7 @@ class TagController extends Controller
 {
     public function index(Tag $tag)
     {
-        return view('tags.index')->with(['tags' => $tag->get()]);
+        return view('tags.index')->with(['tags' => $tag->getPaginateByLimit()]);
     }
     
     public function store(Request $request, Tag $tag)

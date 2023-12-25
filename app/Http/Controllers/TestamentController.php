@@ -11,8 +11,15 @@ class TestamentController extends Controller
     /**
      * 聖書一覧画面
      */
-     public function index(Volume $volume)
+     public function index(Volume $volume, Request $request)
      {
+         if ($request->has('comment_create')) {
+             $note_id = $request->query('comment_create');
+             if (!session()->has('comment_creating')) {
+                session(['comment_creating' => $note_id]);
+            }
+         }
+         
          return view('testaments.index')->with(['volumes' => $volume->get()]);
      }
      
@@ -66,6 +73,9 @@ class TestamentController extends Controller
             $comment_edit_ids = session('comment_editing', []);
         }
         
+        // セッション内のすべてのデータを取得する（デバック)
+        $all_session_data = session()->all();
+        
         return view('testaments.show')->with([
             'volume' => $volume,
             'chapter' => $chapter,
@@ -75,9 +85,10 @@ class TestamentController extends Controller
             'latest_chapter' => $latest_chapter, 
             'earliest_chapter' => $earliest_chapter,
             'previous_volume_latest_chapter' => $previous_volume_latest_chapter,
-            'note_id' => $edit_note_id ?? null,
+            'edit_note_id' => $edit_note_id ?? null,
             'comment_create_note_id' => $comment_create_note_id ?? null,
             'comment_edit_ids' => $comment_edit_ids ?? null,
+            'all_session_data' => $all_session_data,
             ]);
     }
 }

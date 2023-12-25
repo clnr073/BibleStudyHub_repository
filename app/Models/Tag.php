@@ -24,6 +24,14 @@ class Tag extends Model
          return $this->belongsToMany(Testament::class);
      }
      
+    /**
+     * Noteモデルとのリレーションシップ
+     */
+     public function notes()
+     {
+         return $this->belongsToMany(Note::class);
+     } 
+     
      /**
       * Questionモデルとのリレーションシップ
       */

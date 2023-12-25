@@ -66,5 +66,6 @@
                 </div>
             </div>
         </div>
+        {{ dump($note) }}
     </body>
 </x-app-layout>

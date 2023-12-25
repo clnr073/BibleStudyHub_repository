@@ -51,14 +51,17 @@ class Note extends Model
           return $this->belongsTo(User::class);
       }
       
-      public function recordSectionInfoByVolumeAndChapter()
-      {
-          //section番号を取得するメソッドを書く
-      }
-      
       public function getPaginateByLimit(int $limit_count = 4)
       {
           // updated_atで降順に並べたあと、limitで件数制限をかける
           return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
       }
+      
+      public function getByTag($tag_id, int $limit_count = 2)
+      {
+          return $this::whereHas('tags', function ($query) use ($tag_id) {
+              $query->where('tags.id', $tag_id);
+          })->orderBy('updated_at', 'DESC')->paginate($limit_count);
+      }
+
 }

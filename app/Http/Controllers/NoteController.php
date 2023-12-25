@@ -15,7 +15,7 @@ class NoteController extends Controller
     /**
      * ノート一覧画面
      */
-    public function index(Request $request, Note $note)
+    public function index(Request $request, Note $note, Tag $tag)
     {
         if ($request->has('cancel_note_take')) {
             // sessionからvolumeキー、chapterキーの値を取得
@@ -44,7 +44,13 @@ class NoteController extends Controller
              ]);
         }
         
-        return view('notes.index')->with(['notes' => $note->getPaginateByLimit()]);
+        if ($request->has('tag')) {
+            $tag_id = $request->query('tag');
+            $tag_notes = $note->getByTag($tag_id);
+            return view('notes.index')->with(['notes' => $tag_notes, 'tags' => $tag->get()]);
+        } else {
+            return view('notes.index')->with(['notes' => $note->getPaginateByLimit(), 'tags' => $tag->get()]);
+        }
     }
     
     /**
@@ -182,7 +188,7 @@ class NoteController extends Controller
      public function store(Note $note, NoteRequest $request)
      {
          $input_note = $request['note'];
-         $input_testaments = $request->testament_array;
+         $input_testaments = $request->testaments_array;
          $input_tags = $request->tags_array;
          
          if ($request->file('image')) { //画像ファイルが送られたときだけ処理が実行される

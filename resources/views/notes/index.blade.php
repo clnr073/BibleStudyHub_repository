@@ -5,6 +5,13 @@
     
     <body>
         <div class="notes">
+            <div class="tags">
+                @foreach ($tags as $tag)
+                    <span>
+                        <a href="/notes?tag={{ $tag->id }}">{{ $tag->tag }}</a>
+                    </span>
+                @endforeach
+            </div>
             <a href="{{ route('notes.create') }}">ノートを書く</a>
             @foreach($notes as $note)
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

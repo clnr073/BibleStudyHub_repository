@@ -1,44 +1,50 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tags') }}
-        </h2>
-    </x-slot>
-    
     <body>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <form action={{ route('tags.index') }} method="POST">
-                        @csrf
-                        <input type="text" name="tag[tag]" placeholder="新しいタグ名を入力" value="{{ old('tag.tag')}}">
-                        <p class="tag__error" style="color:red">{{ $errors->first('tag.tag') }}</p>
+            <form action={{ route('tags.index') }} method="POST">
+                <div class="flex items-center justify-between">
+                    @csrf
+                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block" type="text" name="tag[tag]" placeholder="新しいタグ名を入力" value="{{ old('tag.tag')}}">
+                    <p class="tag__error" style="color:red">{{ $errors->first('tag.tag') }}</p>
+                    <div class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <input type="submit" value="保存する"/>
-                    </form>
+                    </div>
                 </div>
+            </form>
+            <div class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
                 @foreach ($tags as $tag)
-                    <br>
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900">
-                            <div class="tags">
-                                <p>{{ $tag->tag }}</p>
-                            </div>
-                            <div class="edit">
-                                <a href="/tags/{{ $tag->id }}/edit">編集する</a>
-                            </div>
-                            <div class="delete">
-                                <form action="/tags/{{ $tag->id }}" id="form_{{ $tag->id }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" onclick="deleteTag({{ $tag->id }})">削除</button>
-                                </form>
+                    <div class="p-3">
+                        <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg overflow-visible">
+                            <div class="flex justify-between py-1">
+                                <div class="tags">
+                                    <p>{{ $tag->tag }}</p>
+                                </div>
+                                <x-dropdown align="light">
+                                    <x-slot name="trigger" class="relative z-60">
+                                        <button>
+                                            <svg class="h-6 w-6 text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                            </svg>
+                                        </button>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <x-dropdown-link href="/tags/{{ $tag->id }}/edit">編集する</x-dropdown-link>
+                                        <x-dropdown-link>
+                                            <form action="/tags/{{ $tag->id }}" id="form_{{ $tag->id }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" onclick="deleteTag({{ $tag->id }})">削除</button>
+                                            </form>
+                                        </x-dropdown-link>
+                                    </x-slot>
+                                </x-dropdown>
                             </div>
                         </div>
                     </div>
                 @endforeach
-                <div class='paginate'>
-                    {{ $tags->links() }}
-                </div>
+            </div>
+            <div class='paginate'>
+                {{ $tags->links() }}
             </div>
         </div>
     </body>

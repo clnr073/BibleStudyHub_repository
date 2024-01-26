@@ -6,6 +6,7 @@ use App\Http\Controllers\TestamentController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\ConnectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,3 +91,9 @@ Route::delete('/tags/{tag}', [TagController::class, 'delete']);
 Route::get('/tags/{tag}/edit', [TagController::class, 'edit']);
 // タグ更新処理
 Route::put('/tags/{tag}', [TagController::class, 'update']);
+// 友達表示画面
+Route::get('/connections', [ConnectionController::class, 'index'])->name('connections.index');
+// 友達リクエスト承認処理
+Route::post('/connections', [ConnectionController::class, 'approvalUserRequest']);
+// 友達解除処理
+Route::put('/connections', [ConnectionController::class, 'unFriend']);

@@ -62,6 +62,7 @@ class NoteController extends Controller
      */
      public function show(Note $note)
      {
+         // idを昇順で並べ替え
          $testaments_query_builder = $note->testaments->sortBy('id');
          
          // volume_id をキーとし、その下に chapter をキーとした testaments の多重連想配列
@@ -69,43 +70,8 @@ class NoteController extends Controller
              return $testaments->groupBy('chapter');
          });
         
-         /**
-          * 各volume_id、chapterごとに、最初のsectionと最後のsectionを記録する処理
-          */
-         // リレーションシップを含むすべてのtestamentsを取得
-         $loaded_testaments_with_volume = $note->testaments()->with('volume')->get();
-        
-         // chapterごとに最初のsectionと最後のsectionを格納する連想配列
-         $section_info_by_volume = [];
-         
-         foreach ($loaded_testaments_with_volume as $testament) {
-             $volume_id = $testament->volume->id;
-             $chapter = $testament->chapter;
-             $section = $testament->section;
-             
-             // $section_info_by_volumeに$volume_id、$chapterに関連づけられたエントリが存在するか確認
-             if (!isset($section_info_by_volume[$volume_id][$chapter])) {
-                 // 存在しないなら新しいvolume_id、$chapter用のエントリを作成
-                 $section_info_by_volume[$volume_id][$chapter] = [
-                     'first_section' => $section,
-                     'last_section' => $section,
-                     ];
-             } else {
-                 // 最小のsectionを更新
-                 if ($section < $section_info_by_volume[$volume_id][$chapter]['first_section']) {
-                     $section_info_by_volume[$volume_id][$chapter]['first_section'] = $section;
-                 }
-                 
-                 // 最大のsectionを更新
-                 if ($section > $section_info_by_volume[$volume_id][$chapter]['last_section']) {
-                     $section_info_by_volume[$volume_id][$chapter]['last_section'] = $section;
-                 }
-             }
-         }
-        
          return view('notes.show')->with([
              'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
-             'section_info_by_volume' => $section_info_by_volume,
              'note' => $note]);
      }
     
@@ -165,7 +131,12 @@ class NoteController extends Controller
     
         //sessionに保存されたtestament_arrayの値と等しいtestamentsから取得
         $testaments = Testament::whereIn('id', session('testament_array', []))->get();
-    
+        
+        // volume_id をキーとし、その下に chapter をキーとした testaments の多重連想配列
+        $testaments_by_volume_and_chapter = $testaments->groupBy('volume_id')->map(function ($testaments) {
+             return $testaments->groupBy('chapter');
+         });
+        
         $public_value = 'true';
         
         // セッション内のすべてのデータを取得する（デバック)
@@ -175,6 +146,7 @@ class NoteController extends Controller
             'public_value' => $public_value,
             'tags' => $tag->get(),
             'testaments' => $testaments,
+            'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
             'session_testaments_data' => $testaments, //デバック
             'last_selected_testament' => $last_selected_testament ?? null,
             'all_session_data' => $all_session_data, //デバック
@@ -333,6 +305,11 @@ class NoteController extends Controller
           
           //sessionに保存されたtestament_arrayの値と等しいtestamentsから取得
           $testaments = Testament::whereIn('id', session('testament_array', []))->get();
+          
+          // volume_id をキーとし、その下に chapter をキーとした testaments の多重連想配列
+          $testaments_by_volume_and_chapter = $testaments->groupBy('volume_id')->map(function ($testaments) {
+             return $testaments->groupBy('chapter');
+          });
             
           $public_value = $note->public;
           // pluckメソッドでidカラムの値を抽出
@@ -344,6 +321,7 @@ class NoteController extends Controller
               'note' => $note,
               'tags' => $tag->get(),
               'testaments' => $testaments,
+              'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
               'last_selected_testament' => $last_selected_testament ?? null,
               ]);
       }

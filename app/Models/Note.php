@@ -51,17 +51,18 @@ class Note extends Model
           return $this->belongsTo(User::class);
       }
       
-      public function getPaginateByLimit(int $limit_count = 4)
+      public function getPaginateByLimit(int $limit_count = 10)
       {
           // updated_atで降順に並べたあと、limitで件数制限をかける
           return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
       }
       
-      public function getByTag($tag_id, int $limit_count = 2)
+      public function getByTag($tag_id, int $limit_count = 5)
       {
           return $this::whereHas('tags', function ($query) use ($tag_id) {
               $query->where('tags.id', $tag_id);
-          })->orderBy('updated_at', 'DESC')->paginate($limit_count);
+          })->orderBy('updated_at', 'DESC')->paginate($limit_count)
+          ->appends(['tag' => $tag_id]); //$tag_idの値でクエリパラメータを生成
       }
 
 }

@@ -9,6 +9,12 @@ class Connection extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'follow_id',
+        'followed_id',
+        'approval',
+        ];
+    
     /**
      * Userモデルとのリレーションシップ
      */

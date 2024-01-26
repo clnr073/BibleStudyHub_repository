@@ -92,6 +92,11 @@ class CommentController extends Controller
         //sessionに保存されたtestament_arrayの値と等しいtestamentsから取得
         $testaments = Testament::whereIn('id', session('testament_array', []))->get();
         
+        // volume_id をキーとし、その下に chapter をキーとした testaments の多重連想配列
+        $testaments_by_volume_and_chapter = $testaments->groupBy('volume_id')->map(function ($testaments) {
+            return $testaments->groupBy('chapter');
+        });
+        
         // 特定のnote_idに関連するコメントを取得するクエリを実行
         $comments = Comment::where('note_id', $note)->orderBy('updated_at', 'asc')->paginate(5);
         
@@ -99,6 +104,7 @@ class CommentController extends Controller
             'note_id' => $note,
             'comments' => $comments,
             'testaments' => $testaments,
+            'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
             'last_selected_testament' => $last_selected_testament ?? null,
             ]);
     }
@@ -252,10 +258,16 @@ class CommentController extends Controller
         //sessionに保存されたtestament_arrayの値と等しいtestamentsから取得
         $testaments = Testament::whereIn('id', session('testament_array', []))->get();
         
+        // volume_id をキーとし、その下に chapter をキーとした testaments の多重連想配列
+        $testaments_by_volume_and_chapter = $testaments->groupBy('volume_id')->map(function ($testaments) {
+            return $testaments->groupBy('chapter');
+        });
+        
         return view('notes.comments.edit')->with([
             'note_id' => $note,
             'comment' => $edit_comment,
             'testaments' => $testaments,
+            'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
             'last_selected_testament' => $last_selected_testament ?? null,
             ]);
     }

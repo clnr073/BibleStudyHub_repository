@@ -47,7 +47,15 @@
                             <div class="testaments">
                                 @foreach ($testaments as $testament)
                                     <input type="hidden" name="testaments_array[]" value="{{ $testament->id }}">
-                                    <p>{{ $testament->text }}</p>
+                                @endforeach
+                                @foreach ($testaments_by_volume_and_chapter as $volume_id => $chapters)
+                                    @foreach ($chapters as $chapter => $testaments)
+                                        @foreach ($testaments as $testament)
+                                            <p>{{ $testament->text }}</p>
+                                        @endforeach
+                                        <p>{{ $testament->volume->title }} {{ $chapter }}:{{ $testaments->first()->section }}-{{ $testaments->last()->section }}</p>
+                                        <br>
+                                    @endforeach
                                 @endforeach
                                 @if (count($testaments) === 0 or !$last_selected_testament)
                                 <a href="/testaments?comment_create={{ $note_id }}">聖句を追加</a>

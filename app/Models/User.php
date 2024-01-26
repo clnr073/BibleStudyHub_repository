@@ -45,12 +45,12 @@ class User extends Authenticatable
     /**
      * Connectionモデルとのリレーションシップ
      */
-     public function follwing()
+     public function following()
      {
          return $this->hasMany(Connection::class, 'follow_id');
      }
      
-     public function follwers()
+     public function followers()
      {
          return $this->hasMany(Connection::class, 'followed_id');
      }

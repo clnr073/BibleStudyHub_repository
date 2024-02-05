@@ -35,65 +35,40 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/testaments', [TestamentController::class, 'index'])->name('testaments.index');
-Route::get('/testaments/volume{volume}', [TestamentController::class, 'displayVolumeWithContents']);
-Route::get('/testaments/volume{volume}/chapter{chapter}', [TestamentController::class, 'displayChapterWithContents'])
-    ->name('testaments.show');
+Route::controller(TestamentController::class)->middleware('auth')->group(function () {
+    Route::get('/testaments', 'index')->name('testaments.index');
+    Route::get('/testaments/volume{volume}', 'displayVolumeWithContents')->name('displayVolumeWithContents');
+    Route::get('/testaments/volume{volume}/chapter{chapter}', 'displayChapterWithContents')->name('displayChapterWithContents');
+});
 
-// ノート一覧画面
-Route::get('/notes', [NoteController::class, 'index'])
-    ->name('notes.index');
-    
-// ノート作成画面
-Route::get('/notes/create', [NoteController::class, 'create'])
-    ->name('notes.create');
+Route::controller(NoteController::class)->middleware('auth')->group(function () {
+    Route::get('/notes', 'index')->name('notes.index');
+    Route::get('/notes/create', 'create')->name('create');
+    Route::get('/notes/{note}', 'show')->name('show');
+    Route::post('/notes', 'store')->name('store');
+    Route::get('/notes/{note}/edit', 'edit')->name('edit');
+    Route::put('/notes/{note}', 'update')->name('update');
+    Route::delete('/notes/{note}', 'delete')->name('delete');
+});
 
-// ノート詳細画面
-Route::get('/notes/{note}', [NoteController::class, 'show'])
-    ->name('notes.show');
+Route::controller(CommentController::class)->middleware('auth')->group(function () {
+    Route::get('/notes/{note}/comments', 'index')->name('comments.index');
+    Route::post('/notes/{note}/comments', 'store')->name('store');
+    Route::get('/notes/{note}/comments/{comment}/edit', 'edit')->name('edit');
+    Route::put('/notes/{note}/comments/{comment}', 'update')->name('update');
+    Route::delete('/notes/{note}/comments/{comment}', 'delete')->name('delete');
+});
 
-// ノート登録処理
-Route::post('/notes', [NoteController::class, 'store'])
-    ->name('notes.store');
-    
-// ノート編集処理
-Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
-    ->name('notes.edit');
-// ノート更新処理
-Route::put('/notes/{note}', [NoteController::class, 'update'])
-    ->name('notes.update');
-    
-// コメント一覧表示
-Route::get('/notes/{note}/comments', [CommentController::class, 'index']);
+Route::controller(TagController::class)->middleware('auth')->group(function () {
+    Route::get('/tags', 'index')->name('tags.index');
+    Route::post('/tags', 'store')->name('store');
+    Route::delete('/tags/{tag}', 'delete')->name('delete');
+    Route::get('/tags/{tag}/edit', 'edit')->name('edit');
+    Route::put('/tags/{tag}', 'update')->name('update');
+});
 
-//コメント保存処理
-Route::post('/notes/{note}/comments', [CommentController::class, 'store']);
-
-// コメント編集処理
-Route::get('/notes/{note}/comments/{comment}/edit', [CommentController::class, 'edit']);
-
-// コメント削除処理
-Route::delete('/notes/{note}/comments/{comment}', [CommentController::class, 'delete']);
-
-// コメント更新処理
-Route::put('/notes/{note}/comments/{comment}', [CommentController::class, 'update']);
-    
-// ノート削除処理
-Route::delete('/notes/{note}', [NoteController::class, 'delete'])
-    ->name('notes.delete');
-// タグ一覧表示
-Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
-// タグ保存処理
-Route::post('/tags', [TagController::class, 'store']);
-// タグ削除処理
-Route::delete('/tags/{tag}', [TagController::class, 'delete']);
-// タグ編集処理
-Route::get('/tags/{tag}/edit', [TagController::class, 'edit']);
-// タグ更新処理
-Route::put('/tags/{tag}', [TagController::class, 'update']);
-// 友達表示画面
-Route::get('/connections', [ConnectionController::class, 'index'])->name('connections.index');
-// 友達リクエスト承認処理
-Route::post('/connections', [ConnectionController::class, 'approvalUserRequest']);
-// 友達解除処理
-Route::put('/connections', [ConnectionController::class, 'unFriend']);
+Route::controller(ConnectionController::class)->middleware('auth')->group(function () {
+    Route::get('/connections', 'index')->name('connections.index');
+    Route::post('/connections', 'approvalUserRequest')->name('approvalUserRequest');
+    Route::put('/connections', 'unFriend')->name('unFriend');
+});

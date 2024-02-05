@@ -45,22 +45,35 @@
         </div>
         <!--現時点のchapterの値に応じて、前後のページに移動するメカニズム -->
         <div class="pagination">
-            <br>
-            @if ($volume == 1 and $chapter == 1)
-                <p></p>
-            @elseif ($earliest_chapter->chapter_id === $testament->chapter)
-                <a href="/testaments/volume{{ $volume - 1 }}/chapter{{ $previous_volume_latest_chapter->chapter_id }}">←</a>
-            @else
-                <a href="/testaments/volume{{ $volume }}/chapter{{ $testament->chapter - 1 }}">←</a>
-            @endif
-            
-            @if ($volume === 66 and $testament->chapter === 21)
-                <p></p>
-            @elseif ($latest_chapter->chapter_id === $testament->chapter)
-                <a href="/testaments/volume{{ $volume + 1 }}/chapter1">→</a>
-            @else
-                <a href="/testaments/volume{{ $volume }}/chapter{{ $testament->chapter + 1 }}">→</a>
-            @endif
+            <div class="fixed bottom-2 left-0 right-0 p-4 flex justify-between items-center">
+                @if ($volume == 1 and $chapter == 1)
+                    <p></p>
+                @elseif ($earliest_chapter->chapter_id === $testament->chapter)
+                    <a href="/testaments/volume{{ $volume - 1 }}/chapter{{ $previous_volume_latest_chapter->chapter_id }}">
+                        <!-- 左側のページ送りボタン -->
+                        <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">←</button>
+                    </a>
+                @else
+                    <a href="/testaments/volume{{ $volume }}/chapter{{ $testament->chapter - 1 }}">
+                        <!-- 左側のページ送りボタン -->
+                        <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">←</button>
+                    </a>
+                @endif
+                
+                @if ($volume === 66 and $testament->chapter === 21)
+                    <p></p>
+                @elseif ($latest_chapter->chapter_id === $testament->chapter)
+                    <a href="/testaments/volume{{ $volume + 1 }}/chapter1">
+                        <!-- 右側のページ送りボタン -->
+                        <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">→</button>
+                    </a>
+                @else
+                    <a href="/testaments/volume{{ $volume }}/chapter{{ $testament->chapter + 1 }}">
+                        <!-- 右側のページ送りボタン -->
+                        <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">→</button>
+                    </a>
+                @endif
+            </div>
         </div>
     </body>
     <script>

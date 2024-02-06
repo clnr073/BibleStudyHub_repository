@@ -24,7 +24,7 @@
                 </main>
             
                 <footer class="px-3 py-5 bg-gray-300 text-sm text-gray-400 text-center">
-                    &copy; BibleStudyHub
+                    BibleStudyHub
                 </footer>
             </div>
         </div>

@@ -24,15 +24,19 @@
                                 @foreach ($testaments as $testament)
                                     <input type="hidden" name="testaments_array[]" value="{{ $testament->id }}">
                                 @endforeach
-                                @foreach ($testaments_by_volume_and_chapter as $volume_id => $chapters)
-                                    @foreach ($chapters as $chapter => $testaments)
-                                        @foreach ($testaments as $testament)
-                                            <p>{{ $testament->text }}</p>
+                                @if ($testaments_by_volume_and_chapter && count($testaments_by_volume_and_chapter) > 0)
+                                <blockquote class="p-4 my-4 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
+                                    @foreach ($testaments_by_volume_and_chapter as $volume_id => $chapters)
+                                        @foreach ($chapters as $chapter => $testaments)
+                                            @foreach ($testaments as $testament)
+                                                <p class="italic font-medium leading-relaxed text-gray-900 dark:text-white">{{ $testament->text }}</p>
+                                            @endforeach
+                                            <p>{{ $testament->volume->title }} {{ $chapter }}:{{ $testaments->first()->section }}-{{ $testaments->last()->section }}</p>
+                                            <br>
                                         @endforeach
-                                        <p>{{ $testament->volume->title }} {{ $chapter }}:{{ $testaments->first()->section }}-{{ $testaments->last()->section }}</p>
-                                        <br>
                                     @endforeach
-                                @endforeach
+                                </blockquote>
+                                @endif
                                 @if (count($testaments) === 0 or !$last_selected_testament)
                                 <a class="border-gray-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-24" href="/testaments">聖句を追加</a>
                                 @else

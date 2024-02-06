@@ -60,7 +60,7 @@
                     </a>
                 @endif
                 
-                @if ($volume === 66 and $testament->chapter === 21)
+                @if ($volume === 66 and $testament->chapter === 22)
                     <p></p>
                 @elseif ($latest_chapter->chapter_id === $testament->chapter)
                     <a href="/testaments/volume{{ $volume + 1 }}/chapter1">

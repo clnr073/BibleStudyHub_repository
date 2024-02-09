@@ -2,7 +2,7 @@
     <body>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <form action="/notes/{{ $note->id }}" method="POST">
+                <form action="/notes/{{ $note->id }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="flex items-center justify-between">
@@ -12,7 +12,7 @@
                         </select>
                         <div>
                             <div class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                <input type="submit" value="保存する"/>
+                                <input type="submit" value="変更を保存する"/>
                             </div>
                             <div class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 <a href="/notes?cancel_note_take=true">キャンセル</a>
@@ -60,6 +60,15 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="image">
+                        @if ($note->image_url)
+                        <div class="image">
+                            <img src="{{ $note->image_url }}" alt="画像が読み込めません。"/>
+                        </div>
+                        @endif
+                        <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block" type="file" name="image">
+                        <p class="image__error" style="color:red">{{ $errors->first('image') }}</p>
                     </div>
                 </form>
             </div>

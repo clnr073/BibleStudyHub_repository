@@ -14,7 +14,7 @@
                           </li>
                           <li class="flex items-center">
                             <span class="text-gray-600 hover:text-blue-500 transition-colors duration-300">
-                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">第{{ $chapter }}章</a>
+                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">第{{ $chapter }}{{ $volume === '19' ? '篇' : '章' }}</a>
                             </span>
                           </li>
                         </ol>
@@ -26,7 +26,9 @@
                 <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 text-gray-900">
                         <div class="mx-auto max-w-5xl lg:mx-0">
-                          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}章</h2>
+                          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                              {{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}{{ $volume === '19' ? '篇' : '章' }}
+                          </h2>
                           <div class="mt-2 text-lg leading-8 text-gray-600">
                               @foreach ($testaments as $testament)
                                  <label>
@@ -39,14 +41,13 @@
                           </div>
                         </div>  
                     </div>
-                    
                 </div>
             </div>
         </div>
         <!--現時点のchapterの値に応じて、前後のページに移動するメカニズム -->
         <div class="pagination">
             <div class="fixed bottom-2 left-0 right-0 p-4 flex justify-between items-center">
-                @if ($volume == 1 and $chapter == 1)
+                @if ($volume == '1' and $chapter == '1')
                     <p></p>
                 @elseif ($earliest_chapter->chapter_id === $testament->chapter)
                     <a href="/testaments/volume{{ $volume - 1 }}/chapter{{ $previous_volume_latest_chapter->chapter_id }}">
@@ -60,7 +61,7 @@
                     </a>
                 @endif
                 
-                @if ($volume === 66 and $testament->chapter === 22)
+                @if ($volume === '66' and $chapter === '22')
                     <p></p>
                 @elseif ($latest_chapter->chapter_id === $testament->chapter)
                     <a href="/testaments/volume{{ $volume + 1 }}/chapter1">

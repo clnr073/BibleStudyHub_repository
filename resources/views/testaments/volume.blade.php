@@ -17,9 +17,17 @@
                 </div>
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 text-gray-900">
-                        @foreach ($chapters as $chapter)
-                            <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">第{{ $chapter }}章</a>
-                        @endforeach
+                        <div class="grid sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6">
+                            @foreach ($chapters as $chapter)
+                                <div class="p-3">
+                                    <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg overflow-visible">
+                                        <div class="text-center">
+                                            <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">{{ $chapter }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

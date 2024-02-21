@@ -53,22 +53,23 @@ Route::controller(NoteController::class)->middleware('auth')->group(function () 
 
 Route::controller(CommentController::class)->middleware('auth')->group(function () {
     Route::get('/notes/{note}/comments', 'index')->name('comments.index');
-    Route::post('/notes/{note}/comments', 'store')->name('store');
-    Route::get('/notes/{note}/comments/{comment}/edit', 'edit')->name('edit');
-    Route::put('/notes/{note}/comments/{comment}', 'update')->name('update');
-    Route::delete('/notes/{note}/comments/{comment}', 'delete')->name('delete');
+    Route::post('/notes/{note}/comments', 'store')->name('comments.store');
+    Route::get('/notes/{note}/comments/{comment}/edit', 'edit')->name('comments.edit');
+    Route::put('/notes/{note}/comments/{comment}', 'update')->name('comments.update');
+    Route::delete('/notes/{note}/comments/{comment}', 'delete')->name('comments.delete');
 });
 
 Route::controller(TagController::class)->middleware('auth')->group(function () {
     Route::get('/tags', 'index')->name('tags.index');
-    Route::post('/tags', 'store')->name('store');
-    Route::delete('/tags/{tag}', 'delete')->name('delete');
-    Route::get('/tags/{tag}/edit', 'edit')->name('edit');
-    Route::put('/tags/{tag}', 'update')->name('update');
+    Route::post('/tags', 'store')->name('tags.store');
+    Route::delete('/tags/{tag}', 'delete')->name('tags.delete');
+    Route::get('/tags/{tag}/edit', 'edit')->name('tags.edit');
+    Route::put('/tags/{tag}', 'update')->name('tags.update');
 });
 
 Route::controller(ConnectionController::class)->middleware('auth')->group(function () {
     Route::get('/connections', 'index')->name('connections.index');
-    Route::post('/connections', 'approvalUserRequest')->name('approvalUserRequest');
-    Route::put('/connections', 'unFriend')->name('unFriend');
+    Route::post('/connections/approval', 'approvalUserRequest')->name('approvalUserRequest');
+    Route::put('/connections/unfriend', 'unFriend')->name('unFriend');
+    Route::post('/connections/follow', 'followUser')->name('followUser');
 });

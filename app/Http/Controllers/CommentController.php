@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Testament;
 use App\Http\Requests\CommentRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -100,12 +101,19 @@ class CommentController extends Controller
         // 特定のnote_idに関連するコメントを取得するクエリを実行
         $comments = Comment::where('note_id', $note)->orderBy('updated_at', 'asc')->paginate(5);
         
+        // セッション内のすべてのデータを取得する（デバック)
+        $all_session_data = session()->all();
+        
+        $user_id = Auth::id();
+        
         return view('notes.comments.index')->with([
             'note_id' => $note,
             'comments' => $comments,
             'testaments' => $testaments,
             'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
             'last_selected_testament' => $last_selected_testament ?? null,
+            'all_session_data' => $all_session_data,
+            'user_id' => $user_id,
             ]);
     }
      

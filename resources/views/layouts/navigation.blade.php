@@ -4,6 +4,13 @@
             <a class="text-lg hover:text-gray-300" href="{{ route('dashboard') }}">
                 {{ config('app.name') }}
             </a>
+            <div class="flex-grow"></div>
+            <div class="user_name">
+                @if (Auth::check())
+                <p>ユーザー名: {{ Auth::user()->name }}</p>
+                @endif
+            </div>
+            <div class="mx-2"></div>
             <div>
                 @if (Auth::check())
                 <x-dropdown>

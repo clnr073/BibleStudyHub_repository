@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\Testament;
 use App\Models\Comment;
 use App\Http\Requests\NoteRequest;
+use Illuminate\Support\Facades\Auth;
 use Cloudinary;
 
 class NoteController extends Controller
@@ -44,12 +45,14 @@ class NoteController extends Controller
              ]);
         }
         
+        $user_id = Auth::id();
+        
         if ($request->has('tag')) {
             $tag_id = $request->query('tag');
-            $tag_notes = $note->getByTag($tag_id);
-            return view('notes.index')->with(['notes' => $tag_notes, 'tags' => $tag->get()]);
+            $notes_by_tag = $note->getByTag($user_id, $tag_id);
+            return view('notes.index')->with(['notes' => $notes_by_tag, 'tags' => $tag->getPaginateByLimit($user_id), 'user_id' => $user_id]);
         } else {
-            return view('notes.index')->with(['notes' => $note->getPaginateByLimit(), 'tags' => $tag->get()]);
+            return view('notes.index')->with(['notes' => $note->getPaginateByLimit($user_id), 'tags' => $tag->getPaginateByLimit($user_id), 'user_id' => $user_id]);
         }
     }
     
@@ -69,10 +72,14 @@ class NoteController extends Controller
          $testaments_by_volume_and_chapter = $testaments_query_builder->groupBy('volume_id')->map(function ($testaments) {
              return $testaments->groupBy('chapter');
          });
+         
+         $user_id = Auth::id();
         
          return view('notes.show')->with([
              'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
-             'note' => $note]);
+             'note' => $note,
+             'user_id' => $user_id,
+             ]);
      }
     
     /**
@@ -141,10 +148,12 @@ class NoteController extends Controller
         
         // セッション内のすべてのデータを取得する（デバック)
         $all_session_data = session()->all();
+        
+        $user_id = Auth::id();
     
         return view('notes.create')->with([
             'public_value' => $public_value,
-            'tags' => $tag->get(),
+            'tags' => $tag->getPaginateByLimit($user_id),
             'testaments' => $testaments,
             'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
             'session_testaments_data' => $testaments, //デバック
@@ -312,6 +321,9 @@ class NoteController extends Controller
           });
             
           $public_value = $note->public;
+          
+          $user_id = Auth::id();
+          
           // pluckメソッドでidカラムの値を抽出
           $tag_id = $note->tags->pluck('id');
           
@@ -319,7 +331,7 @@ class NoteController extends Controller
               'public_value' => $public_value,
               'tag_id' => $tag_id,
               'note' => $note,
-              'tags' => $tag->get(),
+              'tags' => $tag->getPaginateByLimit($user_id),
               'testaments' => $testaments,
               'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
               'last_selected_testament' => $last_selected_testament ?? null,
@@ -382,7 +394,7 @@ class NoteController extends Controller
        */
        public function delete(Note $note)
        {
-           $note->delete(); //Modelクラスの関数delete
+           $note->delete(); // Modelクラスの関数delete
            return redirect(route('notes.index'));
        }
 }

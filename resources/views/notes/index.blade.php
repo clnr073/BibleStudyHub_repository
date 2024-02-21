@@ -85,6 +85,8 @@
                                             </button>
                                         </x-slot>
                                         <x-slot name="content">
+                                            <x-dropdown-link href="/notes/{{ $note->id }}/comments">コメントする</x-dropdown-link>
+                                            @if ($note->user_id === $user_id)
                                             <x-dropdown-link href="/notes/{{ $note->id }}/edit">編集する</x-dropdown-link>
                                             <x-dropdown-link>
                                                 <form action="/notes/{{ $note->id }}" id="form_{{ $note->id }}" method="post">
@@ -93,10 +95,11 @@
                                                     <button type="button" onclick="deleteNote({{ $note->id }})">このノートを削除する</button>
                                                 </form>
                                             </x-dropdown-link>
+                                            @endif
                                         </x-slot>
                                     </x-dropdown>
                                 </div>
-                                <p>{{ $note->created_at }}</p>
+                                <p>{{ $note->user->name }}・{{ $note->created_at }}</p>
                                 <a href="/notes/{{ $note->id }}">{{ $note->title }}<a>
                                 @if($note->image_url)
                                 <div class="image">

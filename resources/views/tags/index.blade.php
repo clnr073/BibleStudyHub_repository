@@ -11,14 +11,15 @@
                     </div>
                 </div>
             </form>
-            <div class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
+            <div class="grid sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6">
                 @foreach ($tags as $tag)
                     <div class="p-3">
                         <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg overflow-visible">
                             <div class="flex justify-between py-1">
                                 <div class="tags">
-                                    <p>{{ $tag->tag }}</p>
+                                    <a href="/notes?tag={{ $tag->id }}">{{ $tag->tag }}</a>
                                 </div>
+                                @if ($tag->user_id === $user_id)
                                 <x-dropdown align="light">
                                     <x-slot name="trigger" class="relative z-60">
                                         <button>
@@ -38,6 +39,7 @@
                                         </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes; //論理削除
+use App\Models\Connection;
 
 class Note extends Model
 {
@@ -51,18 +52,61 @@ class Note extends Model
           return $this->belongsTo(User::class);
       }
       
-      public function getPaginateByLimit(int $limit_count = 10)
+      public function getPaginateByLimit(int $user_id, int $limit_count = 10)
       {
+          // ログインユーザーのノートと友達のノートを取得するクエリを構築
+          $query = $this->query()->where('user_id', $user_id);
+          
+          // 友達のidを取得する
+          $friend_ids = Connection::where(function ($query) use ($user_id) {
+              $query->where('approval', 1)
+                    ->where(function ($query) use ($user_id) {
+                        $query->orWhere('follow_id', $user_id)
+                              ->orWhere('followed_id', $user_id);
+                    });
+          })->get()->flatMap(function ($record) use ($user_id) {
+              return [$record->follow_id, $record->followed_id];
+          })->reject(function ($friend_id) use ($user_id) {
+              return $friend_id == $user_id;
+          })->unique()->values()->toArray();
+        
+          // $friend_idsを使って、友達の公開ノートも含める
+          $query->orWhere(function ($query) use ($friend_ids) {
+              $query->whereIn('user_id', $friend_ids)
+                    ->where('public', 1);
+          });
+          
           // updated_atで降順に並べたあと、limitで件数制限をかける
-          return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+          return $query->orderBy('updated_at', 'DESC')->paginate($limit_count);
       }
       
-      public function getByTag($tag_id, int $limit_count = 5)
+      public function getByTag($user_id, $tag_id)
       {
-          return $this::whereHas('tags', function ($query) use ($tag_id) {
-              $query->where('tags.id', $tag_id);
-          })->orderBy('updated_at', 'DESC')->paginate($limit_count)
-          ->appends(['tag' => $tag_id]); //$tag_idの値でクエリパラメータを生成
+          // 友達のidを取得する
+          $friend_ids = Connection::where(function ($query) use ($user_id) {
+              $query->where('approval', 1)
+                    ->where(function ($query) use ($user_id) {
+                        $query->orWhere('follow_id', $user_id)
+                              ->orWhere('followed_id', $user_id);
+                    });
+          })->get()->flatMap(function ($record) use ($user_id) {
+              return [$record->follow_id, $record->followed_id];
+          })->reject(function ($friend_id) use ($user_id) {
+              return $friend_id == $user_id;
+          })->unique()->values()->toArray();
+          
+          $query = $this::whereHas('tags', function ($query) use ($tag_id) {
+                          $query->where('tags.id', $tag_id);
+                      })
+                      ->where(function ($query) use ($user_id, $friend_ids) {
+                          $query->where('user_id', $user_id)
+                                ->orWhere(function ($query) use ($friend_ids) {
+                                    $query->whereIn('user_id', $friend_ids)
+                                          ->where('public', 1);
+                                });
+                      })
+                      ->orderBy('updated_at', 'DESC');
+          
+          return $query->paginate(5)->appends(['tag' => $tag_id]);
       }
-
 }

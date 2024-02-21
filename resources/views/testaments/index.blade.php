@@ -13,10 +13,17 @@
                 </div>
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 text-gray-900">
-                        @foreach ($volumes as $volume)
-                            <a href="/testaments/volume{{ $volume->id }}">{{ $volume->title }}</a>
-                            <br>
-                        @endforeach
+                        <div class="grid sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4">
+                            @foreach ($volumes as $volume)
+                                <div class="p-3">
+                                    <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg overflow-visible">
+                                        <div class="text-center">
+                                            <a href="/testaments/volume{{ $volume->id }}">{{ $volume->title }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

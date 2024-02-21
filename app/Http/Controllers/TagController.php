@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
     public function index(Tag $tag)
     {
-        return view('tags.index')->with(['tags' => $tag->getPaginateByLimit()]);
+        $user_id = Auth::id();
+        
+        return view('tags.index')->with(['tags' => $tag->getPaginateByLimit($user_id), 'user_id' => $user_id]);
     }
     
     public function store(Request $request, Tag $tag)

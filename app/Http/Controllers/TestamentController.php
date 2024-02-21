@@ -30,7 +30,9 @@ class TestamentController extends Controller
     {
         $chapters = $testament->where('volume_id', $volume)->groupBy('chapter')->pluck('chapter');
         
-        return view('testaments.volume')->with(['volume' => $volume, 'chapters' => $chapters]);
+        $volume_title = Volume::where('id', $volume)->first();
+        
+        return view('testaments.volume')->with(['volume' => $volume, 'chapters' => $chapters, 'volume_title' => $volume_title]);
     }
      
     /**

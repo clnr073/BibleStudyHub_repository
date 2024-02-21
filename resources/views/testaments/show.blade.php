@@ -9,12 +9,12 @@
                             <svg onclick="location.href='/testaments'" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" class="cursor-pointer hover:fill-blue-500 transition-colors duration-300" fill="#4b5563"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>        <span class="mx-2">/</span>
                           </li>
                           <li class="flex items-center">
-                            <a href="/testaments/volume{{ $volume }}" class="text-gray-600 hover:text-blue-500 transition-colors duration-300">Volume {{ $volume }}</a>
+                            <a href="/testaments/volume{{ $volume }}" class="text-gray-600 hover:text-blue-500 transition-colors duration-300">{{ $chapter_set->volume->title }}</a>
                             <span class="mx-2">/</span>
                           </li>
                           <li class="flex items-center">
                             <span class="text-gray-600 hover:text-blue-500 transition-colors duration-300">
-                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">Chapter {{ $chapter }}</a>
+                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">第{{ $chapter }}{{ $volume === '19' ? '篇' : '章' }}</a>
                             </span>
                           </li>
                         </ol>
@@ -23,10 +23,12 @@
                         <a href="#" id="sendData">選択した聖句からノートを作成する</a>
                     </div>
                 </div>
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 text-gray-900">
-                        <div class="mx-auto max-w-2xl lg:mx-0">
-                          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}章</h2>
+                        <div class="mx-auto max-w-5xl lg:mx-0">
+                          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                              {{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}{{ $volume === '19' ? '篇' : '章' }}
+                          </h2>
                           <div class="mt-2 text-lg leading-8 text-gray-600">
                               @foreach ($testaments as $testament)
                                  <label>
@@ -39,14 +41,13 @@
                           </div>
                         </div>  
                     </div>
-                    
                 </div>
             </div>
         </div>
         <!--現時点のchapterの値に応じて、前後のページに移動するメカニズム -->
         <div class="pagination">
             <div class="fixed bottom-2 left-0 right-0 p-4 flex justify-between items-center">
-                @if ($volume == 1 and $chapter == 1)
+                @if ($volume == '1' and $chapter == '1')
                     <p></p>
                 @elseif ($earliest_chapter->chapter_id === $testament->chapter)
                     <a href="/testaments/volume{{ $volume - 1 }}/chapter{{ $previous_volume_latest_chapter->chapter_id }}">
@@ -60,7 +61,7 @@
                     </a>
                 @endif
                 
-                @if ($volume === 66 and $testament->chapter === 22)
+                @if ($volume === '66' and $chapter === '22')
                     <p></p>
                 @elseif ($latest_chapter->chapter_id === $testament->chapter)
                     <a href="/testaments/volume{{ $volume + 1 }}/chapter1">

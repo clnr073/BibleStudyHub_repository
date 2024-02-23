@@ -18,7 +18,7 @@
                                 <div class="p-3">
                                     <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg overflow-visible">
                                         <div class="text-center">
-                                            <a href="/testaments/volume{{ $volume->id }}">{{ $volume->title }}</a>
+                                            <a href="/testaments/volume{{ $volume->id }}">{{ $volume->id }} {{ $volume->title }}</a>
                                         </div>
                                     </div>
                                 </div>

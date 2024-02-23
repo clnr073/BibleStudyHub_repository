@@ -47,29 +47,29 @@
         <!--現時点のchapterの値に応じて、前後のページに移動するメカニズム -->
         <div class="pagination">
             <div class="fixed bottom-2 left-0 right-0 p-4 flex justify-between items-center">
-                @if ($volume == '1' and $chapter == '1')
+                @if ($volume === 1 and $chapter === 1)
                     <p></p>
-                @elseif ($earliest_chapter->chapter_id === $testament->chapter)
-                    <a href="/testaments/volume{{ $volume - 1 }}/chapter{{ $previous_volume_latest_chapter->chapter_id }}">
+                @elseif ($chapter === 1)
+                    <a href="/testaments/volume{{ $volume - 1 }}/chapter{{ $previous_volume_max_chapter }}">
                         <!-- 左側のページ送りボタン -->
                         <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">←</button>
                     </a>
                 @else
-                    <a href="/testaments/volume{{ $volume }}/chapter{{ $testament->chapter - 1 }}">
+                    <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter - 1 }}">
                         <!-- 左側のページ送りボタン -->
                         <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">←</button>
                     </a>
                 @endif
                 
-                @if ($volume === '66' and $chapter === '22')
+                @if ($volume === 66 and $chapter === 22)
                     <p></p>
-                @elseif ($latest_chapter->chapter_id === $testament->chapter)
+                @elseif ($chapter === $current_volume_max_chapter)
                     <a href="/testaments/volume{{ $volume + 1 }}/chapter1">
                         <!-- 右側のページ送りボタン -->
                         <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">→</button>
                     </a>
                 @else
-                    <a href="/testaments/volume{{ $volume }}/chapter{{ $testament->chapter + 1 }}">
+                    <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter + 1 }}">
                         <!-- 右側のページ送りボタン -->
                         <button class="bg-gray-800 text-gray-200 px-4 py-2 rounded-full">→</button>
                     </a>

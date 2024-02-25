@@ -11,35 +11,37 @@
                     </div>
                 </div>
             </form>
-            <div class="grid sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6">
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
                 @foreach ($tags as $tag)
                     <div class="p-3">
-                        <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg overflow-visible">
-                            <div class="flex justify-between py-1">
-                                <div class="tags">
-                                    <a href="/notes?tag={{ $tag->id }}">{{ $tag->tag }}</a>
+                        <div class="p-2 bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg overflow-visible items-center">
+                            <div class="px-3">
+                                <div class="flex justify-between">
+                                    <div class="tags">
+                                        <a href="/notes?tag={{ $tag->id }}">{{ $tag->tag }}</a>
+                                    </div>
+                                    @if ($tag->user_id === $user_id)
+                                    <x-dropdown align="light">
+                                        <x-slot name="trigger" class="relative z-60">
+                                            <button>
+                                                <svg class="h-6 w-6 text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <x-dropdown-link href="/tags/{{ $tag->id }}/edit">編集する</x-dropdown-link>
+                                            <x-dropdown-link>
+                                                <form action="/tags/{{ $tag->id }}" id="form_{{ $tag->id }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" onclick="deleteTag({{ $tag->id }})">削除</button>
+                                                </form>
+                                            </x-dropdown-link>
+                                        </x-slot>
+                                    </x-dropdown>
+                                    @endif
                                 </div>
-                                @if ($tag->user_id === $user_id)
-                                <x-dropdown align="light">
-                                    <x-slot name="trigger" class="relative z-60">
-                                        <button>
-                                            <svg class="h-6 w-6 text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
-                                            </svg>
-                                        </button>
-                                    </x-slot>
-                                    <x-slot name="content">
-                                        <x-dropdown-link href="/tags/{{ $tag->id }}/edit">編集する</x-dropdown-link>
-                                        <x-dropdown-link>
-                                            <form action="/tags/{{ $tag->id }}" id="form_{{ $tag->id }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" onclick="deleteTag({{ $tag->id }})">削除</button>
-                                            </form>
-                                        </x-dropdown-link>
-                                    </x-slot>
-                                </x-dropdown>
-                                @endif
                             </div>
                         </div>
                     </div>

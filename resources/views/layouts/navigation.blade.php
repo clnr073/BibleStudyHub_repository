@@ -20,20 +20,20 @@
                         </svg>
                     </x-slot>
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('testaments.index')" :active="request()->routeIs('index')">
+                        <x-dropdown-link :href="route('showVolume')" :active="request()->routeIs('showVolume')">
                             {{ __('聖書を読む') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('notes.index')" :active="request()->routeIs('index')">
+                        <x-dropdown-link :href="route('notes.index')" :active="request()->routeIs('notes.index')">
                             {{ __('ノート') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('tags.index')" :active="request()->routeIs('index')">
+                        <x-dropdown-link :href="route('tags.index')" :active="request()->routeIs('tags.index')">
                             {{ __('タグ') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('connections.index')" :active="request()->routeIs('connections.index')">
                             {{ __('友達') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('プロフィール') }}
+                            {{ __('マイプロフィール') }}
                         </x-dropdown-link>
                        <x-dropdown-link>
                             <form method="POST" action="{{ route('logout') }}">

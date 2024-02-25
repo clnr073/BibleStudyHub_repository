@@ -107,6 +107,6 @@ class Note extends Model
                       })
                       ->orderBy('updated_at', 'DESC');
           
-          return $query->paginate(5)->appends(['tag' => $tag_id]);
+          return $query->paginate(10)->appends(['tag' => $tag_id]);
       }
 }

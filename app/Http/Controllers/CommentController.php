@@ -99,8 +99,20 @@ class CommentController extends Controller
         });
         
         // 特定のnote_idに関連するコメントを取得するクエリを実行
-        $comments = Comment::where('note_id', $note)->orderBy('updated_at', 'asc')->paginate(5);
+        $comments = Comment::where('note_id', $note)->orderBy('created_at', 'asc')->paginate(5);
+
+        // volume,chapterごとにtestamentsをグルーピング
+        foreach ($comments as $comment) {
+            $testaments = $comment->testaments;
         
+            $grouped_testaments = $testaments->groupBy('volume_id')->map(function ($testaments) {
+                return $testaments->groupBy('chapter');
+            });
+        
+            // $commentに直接$grouped_testamentsを格納する
+            $comment->grouped_testaments = $grouped_testaments;
+        }
+
         // セッション内のすべてのデータを取得する（デバック)
         $all_session_data = session()->all();
         

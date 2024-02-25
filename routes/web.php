@@ -36,9 +36,9 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::controller(TestamentController::class)->middleware('auth')->group(function () {
-    Route::get('/testaments', 'index')->name('testaments.index');
-    Route::get('/testaments/volume{volume}', 'displayVolumeWithContents')->name('displayVolumeWithContents');
-    Route::get('/testaments/volume{volume}/chapter{chapter}', 'displayChapterWithContents')->name('displayChapterWithContents');
+    Route::get('/testaments', 'showVolume')->name('showVolume');
+    Route::get('/testaments/volume{volume}', 'showChapter')->name('showChapter');
+    Route::get('/testaments/volume{volume}/chapter{chapter}', 'showSection')->name('showSection');
 });
 
 Route::controller(NoteController::class)->middleware('auth')->group(function () {

@@ -35,13 +35,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::controller(TestamentController::class)->middleware('auth')->group(function () {
+Route::controller(TestamentController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/testaments', 'showVolume')->name('showVolume');
     Route::get('/testaments/volume{volume}', 'showChapter')->name('showChapter');
     Route::get('/testaments/volume{volume}/chapter{chapter}', 'showSection')->name('showSection');
 });
 
-Route::controller(NoteController::class)->middleware('auth')->group(function () {
+Route::controller(NoteController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/notes', 'index')->name('notes.index');
     Route::get('/notes/create', 'create')->name('create');
     Route::get('/notes/{note}', 'show')->name('show');
@@ -51,7 +51,7 @@ Route::controller(NoteController::class)->middleware('auth')->group(function () 
     Route::delete('/notes/{note}', 'delete')->name('delete');
 });
 
-Route::controller(CommentController::class)->middleware('auth')->group(function () {
+Route::controller(CommentController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/notes/{note}/comments', 'index')->name('comments.index');
     Route::post('/notes/{note}/comments', 'store')->name('comments.store');
     Route::get('/notes/{note}/comments/{comment}/edit', 'edit')->name('comments.edit');
@@ -59,7 +59,7 @@ Route::controller(CommentController::class)->middleware('auth')->group(function 
     Route::delete('/notes/{note}/comments/{comment}', 'delete')->name('comments.delete');
 });
 
-Route::controller(TagController::class)->middleware('auth')->group(function () {
+Route::controller(TagController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/tags', 'index')->name('tags.index');
     Route::post('/tags', 'store')->name('tags.store');
     Route::delete('/tags/{tag}', 'delete')->name('tags.delete');
@@ -67,7 +67,7 @@ Route::controller(TagController::class)->middleware('auth')->group(function () {
     Route::put('/tags/{tag}', 'update')->name('tags.update');
 });
 
-Route::controller(ConnectionController::class)->middleware('auth')->group(function () {
+Route::controller(ConnectionController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/connections', 'index')->name('connections.index');
     Route::post('/connections/approval', 'approvalUserRequest')->name('approvalUserRequest');
     Route::put('/connections/unfriend', 'unFriend')->name('unFriend');

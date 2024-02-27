@@ -95,7 +95,7 @@
                             <div class="flex flex-col">
                                 <!-- hiddenフィールドとしてnote_idを追加 -->
                                 <input type="hidden" name="new_comment[note_id]" value="{{ $note_id }}">
-                                <textarea class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full h-20 overflow-wrap" name="new_comment[text]" placeholder="ここに入力">{{ $comment->text }}</textarea>
+                                <textarea class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full h-20 overflow-wrap" name="new_comment[text]" placeholder="ここに入力">{{ old('new_comment.text')}}</textarea>
                                 <p class="title__error" style="color:red">{{ $errors->first('new_comment.text') }}</p>
                                 <div class="testaments">
                                     @foreach ($testaments as $testament)

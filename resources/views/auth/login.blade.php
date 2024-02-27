@@ -40,7 +40,7 @@
             @endif
 
             <x-primary-button class="ml-3">
-                {{ __('ログイン') }}
+                {{ __('Log in') }}
             </x-primary-button>
         </div>
     </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TagRequest;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class TagController extends Controller
         return view('tags.index')->with(['tags' => $tag->getPaginateByLimit($user_id), 'user_id' => $user_id]);
     }
     
-    public function store(Request $request, Tag $tag)
+    public function store(TagRequest $request, Tag $tag)
     {
         $input_tag = $request['tag'];
         $input_tag += ['user_id' => $request->user()->id];
@@ -30,7 +31,7 @@ class TagController extends Controller
         return view('tags.edit')->with(['tag' => $tag]);
     }
     
-    public function update(Request $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
         $input_tag = $request['tag'];
         $input_tag += ['user_id' => $request->user()->id];

@@ -24,9 +24,9 @@ class NoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'note.title' => 'required',
+            'note.title' => 'required|max:100',
             'note.text' => 'required',
-            'image' => 'max:2097152',
+            'image' => 'max:2048',
         ];
     }
 }

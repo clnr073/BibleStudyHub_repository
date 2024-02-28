@@ -73,9 +73,13 @@
                     </div>
                     <div class="image">
                         @if ($note->image_url)
-                        <div class="image">
-                            <img src="{{ $note->image_url }}" alt="画像が読み込めません。"/>
-                        </div>
+                        <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900">現在登録されている写真:</p>
+                        <ul class="mt-3 gap-4 md:gap-6 xl:gap-8 w-1/2">
+                            <li class="group flex justify-center items-center bg-gray-100 overflow-hidden rounded-lg shadow-lg relative">
+                                <img src="{{ $note->image_url }}" class="object-contain object-center group-hover:scale-105 transition duration-200"/>
+                            </li>
+                        </ul>
+                        <div class="py-1"></div>
                         @endif
                         <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block" type="file" name="image">
                         <p class="image__error" style="color:red">{{ $errors->first('image') }}</p>

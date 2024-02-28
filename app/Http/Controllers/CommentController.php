@@ -103,9 +103,9 @@ class CommentController extends Controller
 
         // volume,chapterごとにtestamentsをグルーピング
         foreach ($comments as $comment) {
-            $testaments = $comment->testaments;
+            $comments_testaments = $comment->testaments;
         
-            $grouped_testaments = $testaments->groupBy('volume_id')->map(function ($testaments) {
+            $grouped_testaments = $comments_testaments->groupBy('volume_id')->map(function ($testaments) {
                 return $testaments->groupBy('chapter');
             });
         

@@ -47,17 +47,17 @@
                                     @if ($comment->grouped_testaments && count($comment->grouped_testaments) > 0)
                                         <blockquote class="p-4 my-4 border-s-4 border-gray-300 bg-gray-50">
                                             @foreach ($comment->grouped_testaments as $volume_id => $chapters)
-                                                @foreach ($chapters as $chapter => $testaments)
-                                                    @foreach ($testaments as $testament)
-                                                        <p class="italic font-medium leading-relaxed text-gray-900">{{ $testament->text }}</p>
+                                                @foreach ($chapters as $chapter => $sections)
+                                                    @foreach ($sections as $section)
+                                                        <p class="italic font-medium leading-relaxed text-gray-900">{{ $section->text }}</p>
                                                     @endforeach
                                                     <div class="h-3"></div>
                                                     @php
-                                                        $first_section = $testaments->first()->section;
-                                                        $last_section = $testaments->last()->section;
+                                                        $first_section = $sections->first()->section;
+                                                        $last_section = $sections->last()->section;
                                                         $section_to_display = $first_section === $last_section ? $first_section : "$first_section-$last_section";
                                                     @endphp
-                                                    <p>{{ $testaments->first()->volume->title }} {{ $chapter }}: {{ $section_to_display }}</p>
+                                                    <p>{{ $sections->first()->volume->title }} {{ $chapter }}: {{ $section_to_display }}</p>
                                                 @endforeach
                                                 @if (!$loop->last)
                                                     <br>
@@ -82,10 +82,10 @@
                             <div><p>新しいコメントを追加</p></div>
                             <div class="flex-grow"></div>
                             <div class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                <input type="submit" value="投稿"/>
+                                <input type="submit" value="コメントを投稿"/>
                             </div>
                             <div class="mx-2"></div>
-                            <div class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                            <div class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 <div class="footer">
                                     <a href="/notes/{{ $note_id }}/comments?cancel_comment_take=true">キャンセル</a>
                                 </div>

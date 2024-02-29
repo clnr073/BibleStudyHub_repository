@@ -26,14 +26,18 @@ class ConnectionController extends Controller
             return $friend_id == $user_id;
         })->unique()->values()->toArray();
 
+        // ユーザーの友達のレコードを取得
+        $friends = User::whereIn('id', $friend_ids)->paginate(10);
+        
+        $follows = $connection::where(function ($query) use ($user_id) {
+            $query->where('follow_id', $user_id)
+                  ->where('approval', 0);
+        })->pluck('followed_id');
         
         // 友達でないユーザーのレコードを取得
         $users = User::whereNotIn('id', $friend_ids)
-             ->where('id', '!=', $user_id)
-             ->paginate(10);
-
-        // ユーザーの友達のレコードを取得
-        $friends = User::whereIn('id', $friend_ids)->paginate(10);
+            ->where('id', '!=', $user_id)
+            ->paginate(20);
         
         $followers = $connection::where(function ($query) use ($user_id) {
             $query->where('followed_id', $user_id)
@@ -43,6 +47,7 @@ class ConnectionController extends Controller
         return view('connections.index')->with([
             'users' => $users,
             'friends' => $friends,
+            'follows' => $follows,
             'followers' => $followers,
             ]);
     }

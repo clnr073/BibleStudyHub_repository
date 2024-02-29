@@ -32,11 +32,10 @@ class DatabaseSeeder extends Seeder
         // 外部キー制約の有効化
         Schema::enableForeignKeyConstraints();
         
-        $this->call([
-            VolumeTableSeeder::class,
-            TestamentTableSeeder::class,
-        ]);
-        
+        //$this->call([
+        //    VolumeTableSeeder::class,
+        //    TestamentTableSeeder::class,
+        //]);
     }
     
     /**
@@ -46,11 +45,14 @@ class DatabaseSeeder extends Seeder
     {
         // テーブルのリスト
         $tables = [
-            'testaments',
-            'volumes',
             'notes',
+            'note_tag',
+            'note_testament',
             'comments',
+            'comment_testament',
             'tags',
+            'connections',
+            'users',
             ];
         
         // テーブルごとにtruncate

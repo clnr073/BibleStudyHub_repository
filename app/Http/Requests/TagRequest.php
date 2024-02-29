@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NoteRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class NoteRequest extends FormRequest
      */
     public function authorize()
     {
-        return true; //元の値はfalse
+        return true;
     }
 
     /**
@@ -24,9 +24,7 @@ class NoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'note.title' => 'required|max:100',
-            'note.text' => 'required',
-            'image' => 'max:2048',
+            'tag.tag' => 'required|string|max:20',
         ];
     }
 }

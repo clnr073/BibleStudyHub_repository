@@ -14,7 +14,7 @@
                           </li>
                           <li class="flex items-center">
                             <span class="text-gray-600 hover:text-blue-500 transition-colors duration-300">
-                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">第{{ $chapter }}{{ $volume === '19' ? '篇' : '章' }}</a>
+                                <a href="/testaments/volume{{ $volume }}/chapter{{ $chapter }}">第{{ $chapter }}{{ $volume === 19 ? '篇' : '章' }}</a>
                             </span>
                           </li>
                         </ol>
@@ -27,7 +27,7 @@
                     <div class="p-6 text-gray-900">
                         <div class="mx-auto max-w-5xl lg:mx-0">
                           <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                              {{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}{{ $volume === '19' ? '篇' : '章' }}
+                              {{ $chapter_set->volume->title }}: 第{{ $chapter_set->chapter }}{{ $volume === 19 ? '篇' : '章' }}
                           </h2>
                           <div class="mt-2 text-lg leading-8 text-gray-600">
                               @foreach ($testaments as $testament)

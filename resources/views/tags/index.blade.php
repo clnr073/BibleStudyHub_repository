@@ -4,7 +4,7 @@
             <form action={{ route('tags.index') }} method="POST">
                 <div class="flex items-center justify-between">
                     @csrf
-                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block" type="text" name="tag[tag]" placeholder="新しいタグ名を入力" value="{{ old('tag.tag')}}">
+                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block" type="text" name="tag[tag]" placeholder="新しいタグ名を入力" value="{{ old('tag.tag') }}">
                     <p class="tag__error" style="color:red">{{ $errors->first('tag.tag') }}</p>
                     <div class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <input type="submit" value="保存する"/>

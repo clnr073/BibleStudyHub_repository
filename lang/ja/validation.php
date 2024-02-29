@@ -253,6 +253,11 @@ return [
         'updated_at' => '更新日',
         'username' => 'ユーザー名',
         'year' => '年',
+        'tag.tag' => 'タグ',
+        'new_comment.text' => 'コメント',
+        'note.title' => 'タイトル',
+        'note.text' => '本文',
+        'image' => '写真データ',
     ],
 
 ];

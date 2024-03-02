@@ -107,9 +107,11 @@
                         @endif
                         <p class="text-gray-700">{{ $note->text }}</p>
                         @if ($note->image_url)
-                        <ul class="mt-3 gap-4 md:gap-6 xl:gap-8 w-1/2">
+                        <ul id="photo-gallery" class="mt-3 gap-4 md:gap-6 xl:gap-8 w-1/2">
                             <li class="group flex justify-center items-center bg-gray-100 overflow-hidden rounded-lg shadow-lg relative">
-                                <img src="{{ $note->image_url }}" class="object-contain object-center group-hover:scale-105 transition duration-200"/>
+                                <a href="{{ $note->image_url }}">
+                                    <img src="{{ $note->image_url }}" class="object-contain object-center group-hover:scale-105 transition duration-200"/>
+                                </a>
                             </li>
                         </ul>
                         @endif

@@ -20,7 +20,7 @@
                                     <div class="tags">
                                         <a href="/notes?tag={{ $tag->id }}">{{ $tag->tag }}</a>
                                     </div>
-                                    @if ($tag->user_id === $user_id)
+                                    @can ('update', $tag)
                                     <x-dropdown align="light">
                                         <x-slot name="trigger" class="relative z-60">
                                             <button>
@@ -40,7 +40,7 @@
                                             </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>
-                                    @endif
+                                    @endcan
                                 </div>
                             </div>
                         </div>

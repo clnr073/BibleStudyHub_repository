@@ -65,6 +65,8 @@ class NoteController extends Controller
      */
      public function show(Note $note)
      {
+         $this->authorize('view', $note);
+         
          // idを昇順で並べ替え
          $testaments_query_builder = $note->testaments->sortBy('id');
          
@@ -72,13 +74,10 @@ class NoteController extends Controller
          $testaments_by_volume_and_chapter = $testaments_query_builder->groupBy('volume_id')->map(function ($testaments) {
              return $testaments->groupBy('chapter');
          });
-         
-         $user_id = Auth::id();
         
          return view('notes.show')->with([
              'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
              'note' => $note,
-             'user_id' => $user_id,
              ]);
      }
     
@@ -219,6 +218,8 @@ class NoteController extends Controller
       */
       public function edit(Note $note, Tag $tag, Request $request)
       {
+          $this->authorize('update', $note);
+          
           // sessionに編集中のデータがない場合の処理
           if (!session()->has('note_editing')) {
               // 編集するノートのtestamentsをsessionに保存する
@@ -343,6 +344,8 @@ class NoteController extends Controller
       */
       public function update(Note $note, NoteRequest $request)
       {
+          $this->authorize('update', $note);
+          
           $input_note = $request['note'];
           $input_testaments = $request->testaments_array;
           $input_tags = $request->tags_array;
@@ -394,6 +397,8 @@ class NoteController extends Controller
        */
        public function delete(Note $note)
        {
+           $this->authorize('delete', $note);
+           
            $note->delete(); // Modelクラスの関数delete
            return redirect(route('notes.index'));
        }

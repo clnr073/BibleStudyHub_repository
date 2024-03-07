@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Testament;
+use App\Models\Note;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,8 +14,11 @@ class CommentController extends Controller
     /**
      * コメント一覧表示
      */
-    public function index($note, Comment $comment, Request $request)
+    public function index($note, Request $request)
     {
+        $note_model = Note::find($note); // ルートパラメータから受け取ったnoteのidで対応するノートを取得
+        $this->authorize('view', $note_model); // $note_modelに対応するNoteポリシーメソッドviewを呼び出す
+        
         if ($request->has('cancel_comment_take')) {
             // sessionからvolumeキー、chapterキーの値を取得
             $volumes = session('volume', []);
@@ -116,8 +120,6 @@ class CommentController extends Controller
         // セッション内のすべてのデータを取得する（デバック)
         $all_session_data = session()->all();
         
-        $user_id = Auth::id();
-        
         return view('notes.comments.index')->with([
             'note_id' => $note,
             'comments' => $comments,
@@ -125,7 +127,6 @@ class CommentController extends Controller
             'testaments_by_volume_and_chapter' => $testaments_by_volume_and_chapter,
             'last_selected_testament' => $last_selected_testament ?? null,
             'all_session_data' => $all_session_data,
-            'user_id' => $user_id,
             ]);
     }
      
@@ -177,6 +178,7 @@ class CommentController extends Controller
     public function edit($note, $comment, Request $request)
     {
         $edit_comment = Comment::find($comment);
+        $this->authorize('update', $edit_comment);
         
         if (session()->has('comment_creating')) {
             session()->forget('comment_creating');

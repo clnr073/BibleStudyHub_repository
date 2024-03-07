@@ -20,7 +20,7 @@
                                         </p>
                                     </div>
                                     <div>
-                                        @if ($comment->user_id === $user_id)
+                                        @can ('update', $comment)
                                         <x-dropdown align="light">
                                             <x-slot name="trigger" class="relative z-60">
                                                 <button>
@@ -40,7 +40,7 @@
                                                 </x-dropdown-link>
                                             </x-slot>
                                         </x-dropdown>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </div>
                                 <div class="p-5">

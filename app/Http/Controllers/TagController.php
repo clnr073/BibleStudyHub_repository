@@ -28,11 +28,15 @@ class TagController extends Controller
     
     public function edit(Tag $tag)
     {
+        $this->authorize('update', $tag);
+        
         return view('tags.edit')->with(['tag' => $tag]);
     }
     
     public function update(TagRequest $request, Tag $tag)
     {
+        $this->authorize('update', $tag);
+        
         $input_tag = $request['tag'];
         $input_tag += ['user_id' => $request->user()->id];
         
@@ -43,6 +47,8 @@ class TagController extends Controller
     
     public function delete(Tag $tag)
     {
+        $this->authorize('delete', $tag);
+        
         $tag->delete();
         return redirect(route('tags.index'));
     }

@@ -24,18 +24,18 @@ class DatabaseSeeder extends Seeder
         // ]);
         
         // 外部キー制約の無効化
-        Schema::disableForeignKeyConstraints();
+        //Schema::disableForeignKeyConstraints();
         
         // 既存データの削除
-        $this->truncateTables();
+        //$this->truncateTables();
         
         // 外部キー制約の有効化
-        Schema::enableForeignKeyConstraints();
+        //Schema::enableForeignKeyConstraints();
         
-        //$this->call([
-        //    VolumeTableSeeder::class,
-        //    TestamentTableSeeder::class,
-        //]);
+        $this->call([
+            VolumeTableSeeder::class,
+            TestamentTableSeeder::class,
+        ]);
     }
     
     /**

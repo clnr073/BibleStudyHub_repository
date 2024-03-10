@@ -28,7 +28,10 @@ class TestamentController extends Controller
      */
     public function showChapter($volume ,Testament $testament)
     {
-        $chapters = $testament->where('volume_id', $volume)->groupBy('chapter')->orderBy('id', 'asc')->pluck('chapter');
+        $chapters = $testament->where('volume_id', $volume)
+                      ->groupBy('chapter')
+                      ->orderBy('chapter', 'asc') // chapterでのソートに変更
+                      ->pluck('chapter');
         
         $volume_title = Volume::where('id', $volume)->first();
         

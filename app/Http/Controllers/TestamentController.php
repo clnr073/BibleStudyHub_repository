@@ -20,7 +20,7 @@ class TestamentController extends Controller
             }
          }
          
-         return view('testaments.index')->with(['volumes' => $volume->get()]);
+         return view('testaments.index')->with(['volumes' => $volume->orderBy('id', 'asc')->get()]);
      }
      
     /**
@@ -28,7 +28,7 @@ class TestamentController extends Controller
      */
     public function showChapter($volume ,Testament $testament)
     {
-        $chapters = $testament->where('volume_id', $volume)->groupBy('chapter')->pluck('chapter');
+        $chapters = $testament->where('volume_id', $volume)->groupBy('chapter')->orderBy('id', 'asc')->pluck('chapter');
         
         $volume_title = Volume::where('id', $volume)->first();
         
@@ -46,7 +46,7 @@ class TestamentController extends Controller
         $contents = $testament->where([
             ['volume_id', $volume],
             ['chapter', $chapter],
-            ])->get();
+            ])->orderBy('id', 'asc')->get();
         
         // volumeタイトルとchapter表示用に1つレコードを取得
         $chapter_set = $contents->first();
